@@ -68,7 +68,22 @@ layui.use(['element', 'form','table','upload', 'layer', 'jquery'], function () {
             //请求异常回调
         }
     });
+
 });
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
 function beauty_ajax(url,data,success_func) {//ajax表单提交
     var $ = layui.$
         , layer = layui.layer;

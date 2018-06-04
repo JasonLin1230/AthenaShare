@@ -7,7 +7,11 @@
 namespace Kng\Controller;
 use Think\Controller;
 class MessageController extends Controller{
-
+    public function msg(){
+        $this -> usr_name = $_SESSION ['usr_name'];
+        $this -> new_msg_num = new_message_count ();
+        $this->display();
+    }
 	/*
 	 * Author : JasonLin  2018/6/01
 	 * Describe : 显示发送消息列表

@@ -3,11 +3,10 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<title>管理员登录</title>
-		<link rel="shortcut icon" href="/EZSYS/src/Public/images/favicon.ico" />
-		<link rel="stylesheet" href="/EZSYS/src/Public/css/reset.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="/EZSYS/src/Public/css/style.css" type="text/css" media="screen" />
-		<!--<link rel="stylesheet" href="/EZSYS/src/Public/css/invalid.css" type="text/css" media="screen" />-->
-		<script type="text/javascript" src="/EZSYS/src/Public/scripts/jquery-1.12.3.min.js"></script>
+		<link rel="shortcut icon" href="/AthenaShare/src/Public/images/favicon.ico" />
+		<link rel="stylesheet" href="/AthenaShare/src/Public/css/reset.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="/AthenaShare/src/Public/css/style.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="/AthenaShare/src/Public/scripts/jquery-1.12.3.min.js"></script>
 		<script type="text/javascript">
 			var usr_valid = function (_usr) {
 				if (_usr == '') return false;
@@ -49,10 +48,10 @@
 			<div id="login-top">
 				<h1>知识管理系统</h1>
 					<!-- Logo (221px width) -->
-				<a><img id="logo" src="/EZSYS/src/Public/images/logo.png" alt="Simpla Admin logo" /></a> 
+				<a><img id="logo" src="/AthenaShare/src/Public/images/logo.png" alt="Simpla Admin logo" /></a> 
 			</div>
 			<div id="login-content">
-				<form action="/EZSYS/src/index.php/Admin/checklog" method="post">
+				<form action="/AthenaShare/src/index.php/Admin/checklog" method="post">
 					<p style="width:400px;">
 						<label>帐号</label>
 						<input class="text-input" name="usr" id="usr" type="text" />&nbsp;<i style="display:none;color:red;"></i>

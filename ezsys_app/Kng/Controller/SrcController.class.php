@@ -8,6 +8,10 @@
 namespace Kng\Controller;
 use Think\Controller;
 class SrcController extends Controller {
+    public function src(){
+        $this -> usr_name = $_SESSION ['usr_name'];
+        $this->display();
+    }
 		/*
 		 * Author : JasonLin
 		 * Describe : 个人主页 -> 资源管理 -> 共享资源
