@@ -55,7 +55,7 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
     table.on('tool', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            window.location.href="scholarship_sp_detail_bm.php?paixu="+paixu+'&sfzh='+data.sfzh;
+            // 待写...
         } else if(obj.event === 'delete'){
             layer.confirm('确认删除么', function(index){
                 layer.close(index);

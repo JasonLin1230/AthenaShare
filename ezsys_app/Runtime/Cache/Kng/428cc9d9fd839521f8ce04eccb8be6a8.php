@@ -101,7 +101,7 @@
 </div>
     <div class="layui-body content-main" style="padding: 15px;">
         <!-- 内容主体区域 -->
-        <div class="layui-tab layui-tab-card">
+        <div class="layui-tab layui-tab-card" lay-filter="msg-tab">
             <ul class="layui-tab-title">
                 <li class="layui-this">已发消息</li>
                 <li>已读消息</li>
@@ -113,8 +113,7 @@
                     <div class="table-wrap">
                         <table id="sent_msg" lay-filter="sent_msg"></table>
                         <script type="text/html" id="operation-bar-msg">
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delete">删除</a>
+                            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                         </script>
                     </div>
                 </div>
@@ -196,6 +195,7 @@
     <script src="/AthenaShare/src/Public/layui/layui.js"></script>
     <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
     <script src="/AthenaShare/src/Public/js/index.js"></script>
+    <script src="/AthenaShare/src/Public/js/msg.js"></script>
 </div>
 </body>
 </html>

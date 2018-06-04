@@ -29,6 +29,8 @@ layui.use(['form', 'jquery', 'layer'], function () {
         }
     });
     form.on('submit(info-btn)', function (data) {//修改
-        return beauty_ajax("edit_info", data.field);
+        return beauty_ajax("edit_info", data.field, function () {
+            location.reload();
+        });
     });
 });

@@ -280,20 +280,18 @@ class MessageController extends Controller{
 
 
 	/*
-	 * Author : ez
+	 * Author : JasonLin
 	 * Describe : 根据传入的kid删除知识项实体
 	 */
 	public function delete_msg () {
-		if(check_login()<0){ $this -> redirect('Login/index'); }
 		$usr_id = $_SESSION ['usr_id'];
-
-		$msg_id = I('get.mid');
-		if ($msg_id == null) {
-			return;
-		}
+        $msg_id = $_POST ['msg_id'];
 		$result = M('msg') -> where ("msg_id=$msg_id") -> delete ();
-		$this -> ajaxReturn ($result);
-		//刷新页面
+        if ($result > 0)
+            $arr = array('code' => 0,'msg'=>'删除成功');
+        else
+            $arr = array('code' => 1,'msg'=>'删除失败');
+        print_r(json_encode($arr));
 	}
       
 }

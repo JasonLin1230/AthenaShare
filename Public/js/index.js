@@ -29,48 +29,6 @@ layui.use(['element', 'form','table','upload', 'layer', 'jquery'], function () {
         ]]
     });
     table.render({
-        elem: '#sent_msg'
-        , id: 'sent_msg'
-        , height: 320
-        , url: 'person_msg_send' //数据接口
-        , cellMinWidth: 60
-        , page: true //开启分页
-        , cols: [[ //表头
-            { field: 'dscrib', title: '简讯'}
-            , { field: 'account', title: '接收者'}
-            , { field: 'date', title: '时间', align:'right', sort: true }
-            , { align:'center', toolbar: '#operation-bar-msg', fixed: 'right'}
-        ]]
-    });
-    table.render({
-        elem: '#read_msg'
-        , id: 'read_msg'
-        , height: 320
-        , url: 'person_msg_recive' //数据接口
-        , cellMinWidth: 60
-        , page: true //开启分页
-        , cols: [[ //表头
-            { field: 'dscrib', title: '简讯'}
-            , { field: 'account', title: '发送者'}
-            , { field: 'date', title: '时间', align:'right', sort: true }
-            , { align:'center', toolbar: '#operation-bar-msg', fixed: 'right'}
-        ]]
-    });
-    table.render({
-        elem: '#unread_msg'
-        , id: 'unread_msg'
-        , height: 320
-        , url: 'person_msg_new' //数据接口
-        , cellMinWidth: 60
-        , page: true //开启分页
-        , cols: [[ //表头
-            { field: 'dscrib', title: '简讯'}
-            , { field: 'account', title: '发送者'}
-            , { field: 'date', title: '时间', align:'right', sort: true }
-            , { align:'center', toolbar: '#operation-bar-msg', fixed: 'right'}
-        ]]
-    });
-    table.render({
         elem: '#private_src'
         , id: 'private_src'
         , height: 320
