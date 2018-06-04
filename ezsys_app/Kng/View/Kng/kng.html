@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>AthenaShare</title>
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/base.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <include file="common/header" />
+    <div class="layui-body content-main" style="padding: 15px;">
+        <!-- 内容主体区域 -->
+        <div class="layui-tab layui-tab-card" lay-filter="kng-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">我的发布</li>
+                <li>我的草稿</li>
+                <li>编写最新</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="table-wrap">
+                        <table id="my_share" lay-filter="my_share"></table>
+                        <script type="text/html" id="operation-bar-share">
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delete">删除</a>
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="table-wrap">
+                        <table id="draft" lay-filter="draft"></table>
+                        <script type="text/html" id="operation-bar-draft">
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="release">发布</a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="delete">删除</a>
+                        </script>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <form class="layui-form " action="">
+                        <div class="layui-row">
+                            <div class="layui-col-sm6">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">标题</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="kng_title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">类别</label>
+                                    <div class="layui-input-block">
+                                        <select name="kng_cate" lay-verify="required">
+                                            <option value=""></option>
+                                            <foreach name='getCate' item='vo'>
+                                                <option value={$vo.id}>{$vo.name}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-sm6">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">是否分享</label>
+                                    <div class="layui-input-block">
+                                        <input type="radio" name="kng_sharing" value="0" title="与他人分享" checked>
+                                        <input type="radio" name="kng_sharing" value="1" title="私人收藏">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <textarea id="textfield" name="kng_desc" cols="79" rows="15"></textarea>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="">发布</button>
+                                <button class="layui-btn">保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <include file="common/footer" />
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script src="__PUBLIC__/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace ('textfield');
+    </script>
+    <script src="__PUBLIC__/js/index.js"></script>
+    <script src="__PUBLIC__/js/kng.js"></script>
+</div>
+</body>
+</html>

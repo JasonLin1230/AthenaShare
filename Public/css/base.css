@@ -1,0 +1,9 @@
+.slogan h1{
+    color: #333333;
+    font-weight: 700;
+}
+.slogan h1.italic{
+    color: #666666;
+    font-style: italic;
+    word-spacing: 2px;
+}
