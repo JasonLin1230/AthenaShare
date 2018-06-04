@@ -153,19 +153,19 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">是否分享</label>
                                     <div class="layui-input-block">
-                                        <input type="radio" name="kng_sharing" value="0" title="与他人分享" checked>
-                                        <input type="radio" name="kng_sharing" value="1" title="私人收藏">
+                                        <input type="radio" name="kng_sharing" value="1" title="与他人分享" checked>
+                                        <input type="radio" name="kng_sharing" value="0" title="私人收藏">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <textarea id="textfield" name="kng_desc" cols="79" rows="15"></textarea>
+                            <textarea id="textfield" name="kng_desc" cols="79" rows="10"></textarea>
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="">发布</button>
-                                <button class="layui-btn">保存</button>
+                                <button class="layui-btn" lay-submit lay-filter="kng-release">发布</button>
+                                <button class="layui-btn" lay-submit lay-filter="kng-save">保存</button>
                             </div>
                         </div>
                     </form>

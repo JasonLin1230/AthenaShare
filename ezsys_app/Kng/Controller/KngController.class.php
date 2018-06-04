@@ -66,31 +66,21 @@ class KngController extends BaseController {
 		 */
 		public function insert_kng () {
             $id = $_SESSION ['usr_id'];
-			$sharing = $_POST['kng_sharing'];
-			if ($sharing == 'true'){
-				$share = 1;
-			}else {
-				$share = 0;
-			}
-			// if (isset($_GET['tag'])){
-			// 	$data ['kng_cate_id'] = -1;
-			// }
-			/* 是否是草稿，用第一位标示, 1代表是，0代表不是 */
-			$data ['kng_flag'] = isset ($_POST ['is_script']) ? 1 : 0;
+			$data ['kng_flag'] = $_POST ['is_script'];
 			$data ['kng_name'] = $_POST ['kng_title'];
 			$data ['kng_describe'] = $_POST ['kng_desc'];
-			$data ['kng_share'] = $share;
+			$data ['kng_share'] = $_POST['kng_sharing'];
+            $data ['kng_cate_id'] = $_POST['kng_cate'];
 			$data ['kng_owner_id'] = $id;
-			$data ['kng_cate_id'] = $_POST['kng_cate'];
 			$data ['kng_update_date'] = date("Y-m-d H:i:s");
 			$kng = M ('Kng');
 
-			$rtn = $new_id = $kng -> add ($data);
+			$new_id = $kng -> add ($data);
 			if ($new_id > 0)
-				$rtn = 1;
+                $arr = array('code' => 0,'msg'=>'添加成功');
 			else
-				$rtn = -1;
-			$this -> ajaxReturn ($rtn);
+                $arr = array('code' => 1,'msg'=>'添加失败');
+            print_r(json_encode($arr));
 		}
 		
 
@@ -100,20 +90,15 @@ class KngController extends BaseController {
 		 */
 		public function delete_kng () {
 			$id = $_SESSION ['usr_id'];
-
-			$kng_id = $_GET ['kid'];
-			if ($kng_id == null) {
-				$this -> ajaxReturn (-1);
-			}
-
+			$kng_id = $_POST ['kid'];
 			$kng = M ('Kng');
 			$result = $kng -> where ("kng_id=$kng_id") -> delete ();
-			// Return the count of how many records were deleted.
-			$this -> ajaxReturn ($result);
+            if ($result > 0)
+                $arr = array('code' => 0,'msg'=>'删除成功');
+            else
+                $arr = array('code' => 1,'msg'=>'删除失败');
+            print_r(json_encode($arr));
 		}
-
-
-		
 
 		/*
 		 * Author : JasonLin
@@ -171,20 +156,18 @@ class KngController extends BaseController {
          * Describe : 发布草稿
          */
         public function push_draft(){
-			$kng_id = $_GET ['kid'];
-			if ($kng_id == null) return;
+			$kng_id = $_POST ['kid'];
 			$new_data['kng_flag'] = 0;  //将flag设为0：发布
 			$new_data['kng_share'] = 0;  //将share设为0：不分享
 			$new_data['kng_update_date'] = date("Y-m-d H:i:s");  //更改时间
 			$result = M ('Kng') 
 				-> where ("kng_id=$kng_id")
 				-> save ($new_data);
-			if($result==false){
-				$rtn = 0;
-			}else{
-				$rtn = 1;
-			}
-			$this -> ajaxReturn($rtn); //发布知识  成功：1  失败：0
+            if ($result > 0)
+                $arr = array('code' => 0,'msg'=>'发布成功，默认私有');
+            else
+                $arr = array('code' => 1,'msg'=>'发布失败');
+            print_r(json_encode($arr));
         }
 
 
