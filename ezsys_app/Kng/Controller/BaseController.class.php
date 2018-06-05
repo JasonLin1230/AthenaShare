@@ -21,7 +21,28 @@ class BaseController extends Controller
     public function _initialize(){
         if(!$_SESSION ['usr_id']){
             $this->redirect('Login/index');
-            // $this->error("请先登录系统！",'Login/index');
         }
+    }
+    //修改密码
+    public function ex_pass() {
+        $usr_id = $_SESSION ['usr_id'];
+        $passcode = md5 ($_POST ['old_pass']);
+        $new_passcode = md5 ($_POST ['new_pass']);
+
+        $usr = M ('usr');
+        $data = $usr -> find ($usr_id);
+        if($passcode != $data ['usr_passcode']) {
+            $arr = array('code' => 1,'msg'=>'原密码错误');
+        } else {
+            $new_data ['usr_passcode'] = $new_passcode;
+            $rtn = $usr -> where ("usr_id=$usr_id") -> save ($new_data);
+            if ($rtn != 1){
+                $arr = array('code' => 1,'msg'=>'修改失败');
+            } else {
+                session(null);
+                $arr = array('code' => 0,'msg'=>'修改成功,请重新登录');
+            }
+        }
+        print_r(json_encode($arr));
     }
 }

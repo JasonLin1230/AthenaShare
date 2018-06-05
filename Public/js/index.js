@@ -4,13 +4,30 @@ layui.use(['element', 'form','table','upload', 'layer', 'jquery'], function () {
         , table = layui.table
         , upload = layui.upload
         , layer = layui.layer
-        , $ = layui.$;
+        , $ = layui.$
+        , pass_layer;
     $("#password-btn").click(function () {    //修改密码按钮
-        layer.open({
+        pass_layer = layer.open({
             type: 1,
             title: '修改密码',
             content: $('#passwordTp').html()
         });
+    });
+    form.on('submit(password)', function (data) {
+        if (data.field.new_pass != data.field.confirm_pass) {
+            layer.msg('两次密码输入不同！', {icon: 5});
+            return false;
+        }else if(data.field.old_pass == data.field.new_pass){
+            layer.msg('新密码与原密码相同！', {icon: 5});
+            return false;
+        }else{
+            return beauty_ajax("../Base/ex_pass", data.field, function(){
+                layer.close(pass_layer);
+                setTimeout(function () {
+                    window.location.href="Login/index";
+                },1500);
+            });
+        }
     });
     table.render({
         elem: '#latest_share'
