@@ -7,3 +7,18 @@
     font-style: italic;
     word-spacing: 2px;
 }
+.kng_title{
+    font-size: 26px;
+    margin: 10px 0;
+    text-align: center;
+}
+.min-font{
+    margin-bottom: 10px;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+}
+.kng_content{
+    margin-top: 10px;
+    min-height: 260px;
+}

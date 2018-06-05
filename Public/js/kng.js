@@ -57,7 +57,7 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
     table.on('tool', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            // 待写...
+            window.location='kng_detail'
         } else if(obj.event === 'delete'){
             layer.confirm('确认删除么', function(index){
                 layer.close(index);

@@ -9,22 +9,23 @@ class LoginController extends Controller {
     public function checklog(){
        $usr= I('post.usr');
        $pwd= md5(I('post.pwd'));
+       $has_usr = M('usr')->where("usr_account='%s'",$usr)->find();
        $result = M('usr')->where("usr_account='%s' AND usr_passcode='%s'",$usr,$pwd)->find();
-       if($result){
-            $_SESSION['usr_id'] = $result['usr_id'];
-            $_SESSION ['usr_name'] = $result ['usr_real_name']; // ez 2016/5/6
-            // $this->success('登陆成功', U ('index/index')); // ez 2016/5/6
-            $this -> redirect ('Main/index'); // ez 2016/5/23
+       if(!$has_usr){
+           $arr = array('code' => 1,'msg'=>'用户不存在');
+           print_r(json_encode($arr));
+       }else if (!$result){
+           $arr = array('code' => 1,'msg'=>'密码错误');
+           print_r(json_encode($arr));
        }else{
-            $this->error('登陆失败');
+            $_SESSION['usr_id'] = $result['usr_id'];
+            $_SESSION ['usr_name'] = $result ['usr_real_name'];
+            $this -> redirect ('Main/index'); // ez 2016/5/23
        }
     }
-
-
     public  function logout(){
         session(null);
-        // $this->success('欢迎再来!',U('Login/index'),3);
-				$this -> redirect ('Login/index'); // ez 2016/5/13
+		$this -> redirect ('Login/index'); // ez 2016/5/13
     }
 
 }

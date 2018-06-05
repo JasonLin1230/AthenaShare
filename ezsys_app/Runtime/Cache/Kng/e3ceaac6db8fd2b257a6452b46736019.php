@@ -4,7 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>登录</title>
 <link rel="shortcut icon" href="/AthenaShare/src/Public/images/favicon.ico" />
-	<link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/reset.css" />
+<link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
+<link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/reset.css" />
 <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/login.css" />
 <link rel="Stylesheet" type="text/css" href="/AthenaShare/src/Public/css/forgetPwdDialog.css" />
 <script type="text/javascript" src="/AthenaShare/src/Public/js/jquery-1.12.3.min.js"></script>
@@ -56,5 +57,7 @@
 </div>
 
 <br><br><br><br>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/js/index.js"></script>
 </body>
 </html>
