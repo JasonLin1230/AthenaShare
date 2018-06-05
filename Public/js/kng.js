@@ -31,6 +31,7 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
             { field: 'name', title: '标题'}
             , { field: 'ctnm', title: '类别'}
             , { field: 'dscr', title: '内容'}
+            , { field: 'file_name', title: '文件'}
             , { field: 'lk', title: '点赞数'}
             , { field: 'dt', title: '发布日期', align:'right', sort: true }
             , { align:'center', toolbar: '#operation-bar-share', fixed: 'right'}
@@ -47,6 +48,7 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
             { field: 'name', title: '标题'}
             , { field: 'ctnm', title: '类别'}
             , { field: 'dscr', title: '内容'}
+            , { field: 'file_name', title: '文件'}
             , { field: 'lk', title: '点赞数'}
             , { field: 'dt', title: '发布日期', align:'right', sort: true }
             , { align:'center', toolbar: '#operation-bar-draft', fixed: 'right'}

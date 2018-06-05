@@ -17,15 +17,13 @@ class MessageController extends Controller{
 	 * Describe : 显示发送消息列表
 	*/
 	public function person_msg_send (){
-		if(($usr_id = check_login ()) < 0) { 
-			$this -> redirect ('Login/index'); 
-		}
+        $id = $_SESSION ['usr_id'];
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
 		$msg = M ('msg');
         $data = $msg
 			->table('ezsys_usr usr,ezsys_msg msg') 
-			->where("msg.msg_sender_id = $usr_id and usr.usr_id = msg.msg_rcver_id")
+			->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id")
 			->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
 			->order ('msg_update_date desc')
             ->limit ($page-1,$limit)
@@ -41,15 +39,13 @@ class MessageController extends Controller{
 	 * Describe : 显示已读消息列表
 	*/
 	public function person_msg_recive(){
-		if(($usr_id = check_login ()) < 0) { 
-			$this -> redirect ('Login/index'); 
-		}
+        $id = $_SESSION ['usr_id'];
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
         $msg = M ('msg');
         $data = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_rcver_id = $usr_id and usr.usr_id = msg.msg_sender_id and msg_read = 1")
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1")
             ->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
             ->order ('msg_update_date desc')
             ->limit ($page-1,$limit)
@@ -62,19 +58,17 @@ class MessageController extends Controller{
 
 
 	/*
-	 * Author : zzk  2016/5/11
+	 * Author : JasonLin  2018/5/11
 	 * Describe : 显示未读消息列表
 	*/
 	public function person_msg_new(){
-		if(($usr_id = check_login ()) < 0) { 
-			$this -> redirect ('Login/index'); 
-		}
+        $id = $_SESSION ['usr_id'];
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
         $msg = M ('msg');
         $data = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_rcver_id = $usr_id and usr.usr_id = msg.msg_sender_id and msg_read = 0")
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0")
             ->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
             ->order ('msg_update_date desc')
             ->limit ($page-1,$limit)
@@ -83,6 +77,23 @@ class MessageController extends Controller{
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));
 	}
+
+    /*
+     * Author : JasonLin  2018/5/11
+     * Describe : 消息设为已读
+    */
+    public function person_msg_read(){
+        $id = $_SESSION ['usr_id'];
+        $msg_id = $_POST ['msg_id'];
+        $msg = M ('msg');
+        $data = $msg
+            -> where ("msg_id=$msg_id") -> setField('msg_read',1);
+        if ($data > 0)
+            $arr = array('code' => 0,'msg'=>'操作成功');
+        else
+            $arr = array('code' => 1,'msg'=>'操作失败');
+        print_r(json_encode($arr));
+    }
 
 
 
@@ -91,31 +102,29 @@ class MessageController extends Controller{
 	 * Describe : 个人消息发送 ：用户 TO 用户。
 	*/
 	public function msg_send_utou(){    //cate : 2 （用户）
-		if(check_login()<0){ $this -> redirect('Login/index'); }
 		$usr_id = $_SESSION ['usr_id'];
-		$reciver = I('post.reciver');//获得接受者用户名
-		$describe = I('post.describe');
-		//$this -> ajaxReturn ($_POST);
+        $reciver = $_POST ['reciver'];
+        $describe = $_POST ['describe'];
 
 		//根据用户输入的接受者用户名查询数据库
 	 	$rcver_usr = M('usr') -> where("usr_account = '$reciver'") -> field('usr_id') -> find();
 		 //发送邮件
 		if($rcver_usr == null){
-			$this -> ajaxReturn(-1);
-		}
-		$msg = M('msg');
-		$new_data['msg_sender_id'] = $usr_id;
-		$new_data['msg_sender_cate'] = 2;
-		$new_data['msg_rcver_id'] = $rcver_usr['usr_id'];
-		$new_data['msg_rcver_cate'] = 2;
-		$new_data['msg_describe'] = $describe;
-		$result = $msg -> add($new_data);
-		if($result == false){
-			$rtn = -1;
-		}else {
-			$rtn = 1;
-		}
-		$this -> ajaxReturn ($rtn);
+            $arr = array('code' => 1,'msg'=>'该用户不存在');
+		}else{
+		    $msg = M('msg');
+            $new_data['msg_sender_id'] = $usr_id;
+            $new_data['msg_sender_cate'] = 2;
+            $new_data['msg_rcver_id'] = $rcver_usr['usr_id'];
+            $new_data['msg_rcver_cate'] = 2;
+            $new_data['msg_describe'] = $describe;
+            $result = $msg -> add($new_data);
+            if ($result > 0)
+                $arr = array('code' => 0,'msg'=>'发送成功');
+            else
+                $arr = array('code' => 1,'msg'=>'发送失败');
+        }
+        print_r(json_encode($arr));
 	}
 
 

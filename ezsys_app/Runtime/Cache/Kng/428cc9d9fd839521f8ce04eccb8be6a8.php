@@ -125,6 +125,10 @@
                 <div class="layui-tab-item">
                     <div class="table-wrap">
                         <table id="unread_msg" lay-filter="unread_msg"></table>
+                        <script type="text/html" id="operation-bar-unmsg">
+                            <a class="layui-btn layui-btn-xs" lay-event="read">设为已读</a>
+                            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+                        </script>
                     </div>
                 </div>
                 <div class="layui-tab-item">
@@ -134,23 +138,20 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">接收者</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="nf" placeholder="收信人用户名" autocomplete="off" class="layui-input">
+                                        <input type="text" name="reciver" placeholder="收信人用户名" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="layui-col-sm6">
-
                             </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">消息内容</label>
                             <div class="layui-input-block">
-                                <textarea name="kng_desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                <textarea name="describe" placeholder="请输入内容" class="layui-textarea"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="">发送</button>
+                                <button class="layui-btn" lay-submit lay-filter="msg-btn">发送</button>
                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                         </div>

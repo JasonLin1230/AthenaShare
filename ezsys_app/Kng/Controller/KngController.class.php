@@ -27,7 +27,7 @@ class KngController extends BaseController {
 			$data = $kng
                 -> table ('ezsys_kng kng,ezsys_cate cate')
                 -> where ("kng_owner_id = $id and kng_flag = 0 and kng.kng_cate_id = cate.cate_id")
-                -> field ('kng.kng_id kid,kng.kng_update_date dt,kng.kng_name name,kng.kng_describe dscr,kng.kng_like lk,kng.kng_cate_id ctid,cate.cate_name ctnm')
+                -> field ('kng.kng_id kid,kng.kng_update_date dt,kng.kng_name name,kng.kng_describe dscr,kng.kng_like lk,kng.kng_cate_id ctid,cate.cate_name ctnm,kng.kng_file_name file_name')
                 -> order ('kng_update_date desc')
                 -> limit ($page-1,$limit)
                 -> select ();
@@ -49,7 +49,7 @@ class KngController extends BaseController {
             $data = $kng
                 -> table ('ezsys_kng kng,ezsys_cate cate')
                 -> where ("kng_owner_id=$usr_id and kng_flag = 1 and kng.kng_cate_id = cate.cate_id")
-                -> field ('kng.kng_id kid,kng.kng_update_date dt,kng.kng_name name,kng.kng_describe dscr,kng.kng_like lk,kng.kng_cate_id ctid,cate.cate_name ctnm')
+                -> field ('kng.kng_id kid,kng.kng_update_date dt,kng.kng_name name,kng.kng_describe dscr,kng.kng_like lk,kng.kng_cate_id ctid,cate.cate_name ctnm,kng.kng_file_name file_name')
                 -> order ('kng_update_date desc')
                 -> limit ($page-1,$limit)
                 -> select ();

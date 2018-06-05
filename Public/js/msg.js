@@ -64,7 +64,7 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
             { field: 'dscrib', title: '简讯'}
             , { field: 'account', title: '发送者'}
             , { field: 'date', title: '时间', align:'right', sort: true }
-            , { align:'center', toolbar: '#operation-bar-msg', fixed: 'right'}
+            , { align:'center', toolbar: '#operation-bar-unmsg', fixed: 'right'}
         ]]
     });
     table.on('tool', function(obj){
@@ -84,16 +84,21 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
                     });
                 });
             });
+        }else if(obj.event === 'read'){
+            layer.confirm('确认已读么', function(index){
+                layer.close(index);
+                return beauty_ajax("person_msg_read",data,function () {
+                    table.reload('read_msg', {
+                        url: "person_msg_recive"
+                    });
+                    table.reload('unread_msg', {
+                        url: "person_msg_new"
+                    });
+                });
+            });
         }
     });
-    form.on('submit(kng-release)', function (data) {//发布
-        data.field['is_script']='0';
-        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
-        return beauty_ajax("insert_kng", data.field);
-    });
-    form.on('submit(kng-save)', function (data) {//保存
-        data.field['is_script']='1';
-        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
-        return beauty_ajax("insert_kng", data.field);
+    form.on('submit(msg-btn)', function (data) {//发送消息
+        return beauty_ajax("msg_send_utou", data.field);
     });
 })
