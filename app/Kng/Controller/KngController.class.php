@@ -154,18 +154,26 @@ class KngController extends BaseController {
 		 * Describe : 点赞知识点
 		 */
 		public function like_kng () {
+            $kng_id = $_POST ['kid'];
 			$id = $_SESSION ['usr_id'];
-			$kng_id = $_GET ['kid'];
 			$kng = M ('Kng');
-			$res1 = $kng
-                -> where ("kng_id=$kng_id")
-				-> setInc ('kng_like', 1);
-            $res2 = $kng
-                -> add ("like_usr=$id,like_kid=$kng_id");
-            if ($res1 && $res2)
-                $arr = array('code' => 0,'msg'=>'点赞成功');
-            else
-                $arr = array('code' => 1,'msg'=>'点赞失败');
+            $islike = M ('like')
+                -> where ("like_usr=$id and like_kid=$kng_id")
+                -> find ();
+            if($islike){
+                $arr = array('code' => 1,'msg'=>'已经赞过啦');
+            }else{
+                $res1 = $kng
+                    -> where ("kng_id = $kng_id")
+                    -> setInc ("kng_like", 1);
+                $new_data ['like_usr'] = $id;
+                $new_data ['like_kid'] = $kng_id;
+                $res2 = M("like") -> add($new_data);
+                if ($res1 && $res2)
+                    $arr = array('code' => 0,'msg'=>'点赞成功');
+                else
+                    $arr = array('code' => 1,'msg'=>'点赞失败');
+            }
             print_r(json_encode($arr));
 		}
 

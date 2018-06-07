@@ -94,17 +94,20 @@ layui.use(['element', 'form', 'table', 'layer', 'jquery'], function () {
         return beauty_ajax("insert_kng", data.field);
     });
     $(".layui-btn.like-btn").click(function () {
-        var cur_like=parseInt($(".min-font .like").html());
-        $(".min-font .like").html(cur_like+1);
-        var json=[];
-        json.kid=$(this).attr('data-kid');
+        var post_json={};
+        post_json.kid=$(this).attr('data-kid');
+        console.log(post_json);
         $.ajax({
-            url: 'like_kng',
+            url: "like_kng",
             type: "post",
-            data: json,
+            dataType: "json",
+            data: post_json,
             success: function (data) {
-                data = JSON.parse(data);
-                if (data.code != 0) {
+                // data = JSON.parse(data);
+                if(data.code === 0){
+                    var cur_like=parseInt($(".min-font .like").html());
+                    $(".min-font .like").html(cur_like+1);
+                }else {
                     if(data.msg!=""){
                         layer.msg(data.msg, {
                             icon: 2
@@ -118,11 +121,10 @@ layui.use(['element', 'form', 'table', 'layer', 'jquery'], function () {
                             , time: 2000
                         });
                     }
-                    location.reload();
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                layer.msg(XMLHttpRequest.status + '信息获取失败', {
+                layer.msg(XMLHttpRequest.status + '操作失败', {
                     icon: 2
                     , shade: 0.1
                     , time: 2000
