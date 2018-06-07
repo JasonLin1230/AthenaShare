@@ -31,6 +31,11 @@ class KngController extends BaseController {
             $this -> date = $data ['kng_update_date'];
             $this -> author = $data ['usr_real_name'];
             $this -> like = $data ['kng_like'];
+            if($data ['kng_file_path']){
+                $this -> file = "../../" . $data ['kng_file_path'];
+            }else{
+                $this -> file = 0;
+            }
             $this -> content = $data ['kng_describe'];
             $this->display();
         }
@@ -87,19 +92,52 @@ class KngController extends BaseController {
 			$data ['kng_describe'] = $_POST ['kng_desc'];
 			$data ['kng_share'] = $_POST['kng_sharing'];
             $data ['kng_cate_id'] = $_POST['kng_cate'];
+            $data ['kng_file_name'] = $_POST['file_name'];
+            $data ['kng_file_path'] = $_POST['file_path'];
 			$data ['kng_owner_id'] = $id;
 			$data ['kng_update_date'] = date("Y-m-d H:i:s");
 			$kng = M ('Kng');
-
-			$new_id = $kng -> add ($data);
-			if ($new_id > 0)
+            $new_id = $kng -> add ($data);//存入数据库
+            if ($new_id > 0)
                 $arr = array('code' => 0,'msg'=>'添加成功');
-			else
+            else
                 $arr = array('code' => 1,'msg'=>'添加失败');
             print_r(json_encode($arr));
-		}
-		
 
+		}
+        #上传文件方法
+        public function upload(){
+            $id = $_SESSION ['usr_id'];
+            $file_name=$_FILES['file']['name'];  //获取文件名
+            $file_type=strrchr($file_name,".");  //获取文件后缀
+
+            //获得src库中最大 src_id，用作文件名
+            $src = M ('kng');
+            $max_id = $src -> max('kng_id');
+            $new_max_id = $max_id + 1;
+            //文件存储到本地
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize   =     10000000000 ;// 设置附件上传大小
+            $upload->exts      =     array('zip','rar','7z','tar.gz');// 设置附件上传类型
+            $upload->rootPath  =     "./Uploads/"; // 设置附件上传根目录
+            $upload->savePath  =     "./usr_$id/"; // 设置附件上传（子）目录
+            $upload->saveName  =     "./src_$new_max_id"; // 设置文件名
+            //根目录不存在则创建
+            if(!is_dir($upload->rootPath)){
+                if(!mkdir("./Uploads/")){
+                    $this->error("不能创建Uploads目录");
+                    //$this -> ajaxReturn(0);  //不能创建Uploads
+                }
+            }
+            $date=date("Y-m-d");
+            $info = $upload->upload();
+            if(!$info) {// 上传错误提示错误信息
+                $arr = array('code' => 1,'msg'=>$upload->getError());
+            }else{
+                $arr = array('code' => 0,'msg'=>'文件上传成功','file_name'=>$file_name,'file_path'=>'Uploads/usr_'.$id.'/'.$date.'/src_'.$new_max_id.$file_type);
+            }
+            print_r(json_encode($arr));
+        }
 		/*
 		 * Author : JasonLin
 		 * Describe : 根据传入的kid删除知识项实体

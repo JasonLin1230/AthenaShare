@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <div class="layui-tab-item">
-                    <form class="layui-form " action="">
+                    <form class="layui-form " action="" enctype="multipart/form-data" lay-filter="new-kng" id="new-kng">
                         <div class="layui-row">
                             <div class="layui-col-sm6">
                                 <div class="layui-form-item">
@@ -155,6 +155,10 @@
                                     <button type="button" class="layui-btn" id="upsrc">
                                         <i class="layui-icon">&#xe67c;</i>上传资源
                                     </button>
+                                    <!--<div class="layui-input-block">-->
+                                        <!--<input type="file" name="file" class="layui-btn">-->
+                                    <!--</div>-->
+                                    <small><i>请将所有文件生成压缩包后上传</i></small>
                                 </div>
                             </div>
                             <div class="layui-col-sm6">
@@ -170,10 +174,16 @@
                         <div class="layui-form-item">
                             <textarea id="textfield" name="kng_desc" cols="79" rows="10"></textarea>
                         </div>
+                        <input type="text" name="file_name" class="layui-hide">
+                        <input type="text" name="file_path" class="layui-hide">
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="kng-release">发布</button>
-                                <button class="layui-btn" lay-submit lay-filter="kng-save">保存</button>
+                                <!--<button class="layui-btn upload-btn" lay-submit lay-filter="kng-release">发布</button>-->
+                                <!--<button class="layui-btn upload-btn" lay-submit lay-filter="kng-save">保存</button>-->
+                                <button class="layui-btn upload-btn">发布</button>
+                                <button class="layui-btn upload-btn">保存</button>
+                                <button class="layui-btn layui-hide" lay-submit lay-filter="kng-release" id="release-send">发布</button>
+                                <button class="layui-btn layui-hide" lay-submit lay-filter="kng-save" id="save-send">保存</button>
                             </div>
                         </div>
                     </form>

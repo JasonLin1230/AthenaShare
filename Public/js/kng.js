@@ -1,8 +1,9 @@
-layui.use(['element', 'form', 'table', 'layer', 'jquery'], function () {
+layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () {
     var element = layui.element
         , form = layui.form
         , table = layui.table
         , layer = layui.layer
+        , upload = layui.upload
         , $ = layui.$;
     element.on('tab(kng-tab)', function(data){
         switch(data.index)
@@ -83,20 +84,9 @@ layui.use(['element', 'form', 'table', 'layer', 'jquery'], function () {
             });
         }
     });
-    form.on('submit(kng-release)', function (data) {//发布
-        data.field['is_script']='0';
-        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
-        return beauty_ajax("insert_kng", data.field);
-    });
-    form.on('submit(kng-save)', function (data) {//保存
-        data.field['is_script']='1';
-        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
-        return beauty_ajax("insert_kng", data.field);
-    });
     $(".layui-btn.like-btn").click(function () {
         var post_json={};
         post_json.kid=$(this).attr('data-kid');
-        console.log(post_json);
         $.ajax({
             url: "like_kng",
             type: "post",
@@ -134,5 +124,66 @@ layui.use(['element', 'form', 'table', 'layer', 'jquery'], function () {
                 this;
             }
         });
-    })
+    });
+    $(".upload-btn").click(function () {
+        return false;
+    });
+    form.on('submit(kng-release)', function (data) {//发布
+        data.field['is_script']='0';
+        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
+        return beauty_ajax("insert_kng", data.field);
+    });
+    form.on('submit(kng-save)', function (data) {//保存
+        data.field['is_script']='1';
+        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
+        return beauty_ajax("insert_kng", data.field);
+    });
+    var uploadSrc = upload.render({
+        elem: '#upsrc' //绑定元素
+        ,url: 'upload' //上传接口
+        ,field: 'file'
+        ,auto: false
+        ,bindAction: '.upload-btn'
+        ,accept: 'file' //普通文件
+        ,exts: 'zip|rar|7z' //只允许上传压缩文件
+        ,before: function () {
+            layer.msg('正在提交',{
+                icon: 16
+                ,shade: 0.1
+                ,time: 0
+            });
+        }
+        ,done: function(data){
+            console.log(data);
+            if (data.code === 0) {
+                $("input[name='file_name']").val(data.file_name);
+                $("input[name='file_path']").val(data.file_path);
+                $("#release-send").click();
+            } else {
+                if(data.msg!=""){
+                    layer.msg(data.msg, {
+                        icon: 2
+                        , shade: 0.1
+                        , time: 2000
+                    });
+                }else{
+                    layer.msg('未知错误', {
+                        icon: 2
+                        , shade: 0.1
+                        , time: 2000
+                    });
+                }
+            }
+        }
+        ,error: function(){
+            layer.open({
+                title: '上传失败'
+                ,content: '是否重新删除上传？'
+                ,btn: ['是', '否']
+                ,yes: function(index, layero){
+                    uploadSrc.upload();
+                }
+            });
+        }
+    });
 })

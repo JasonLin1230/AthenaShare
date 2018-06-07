@@ -24,9 +24,11 @@
                 <button type="button" class="layui-btn like-btn" data-kid="{$kid}">
                     <i class="layui-icon">&#xe6c6;</i>点赞
                 </button>
-                <button type="button" class="layui-btn">
+                <if condition="$file neq '0'">
+                <a type="button" class="layui-btn" href="{$file}">
                     <i class="layui-icon">&#xe857;</i>下载文件
-                </button>
+                </a>
+                </if>
             </div>
             <div class="kng_content">
                 {$content}

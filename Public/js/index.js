@@ -1,8 +1,7 @@
-layui.use(['element', 'form','table','upload', 'layer', 'jquery'], function () {
+layui.use(['element', 'form','table', 'layer', 'jquery'], function () {
     var element = layui.element
         , form = layui.form
         , table = layui.table
-        , upload = layui.upload
         , layer = layui.layer
         , $ = layui.$
         , pass_layer;
@@ -75,17 +74,6 @@ layui.use(['element', 'form','table','upload', 'layer', 'jquery'], function () {
             , { align:'center', toolbar: '#operation-bar-src', fixed: 'right'}
         ]]
     });
-    var uploadSrc = upload.render({
-        elem: '#upsrc' //绑定元素
-        ,url: '/upload/' //上传接口
-        ,done: function(res){
-            //上传完毕回调
-        }
-        ,error: function(){
-            //请求异常回调
-        }
-    });
-
 });
 (function() {
     var OriginTitile = document.title, titleTime;

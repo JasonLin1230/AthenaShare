@@ -119,7 +119,7 @@ class SrcController extends Controller {
 		    //文件存储到本地
 			$upload = new \Think\Upload();// 实例化上传类
 		    $upload->maxSize   =     10000000000 ;// 设置附件上传大小
-		    $upload->exts      =     array('zip','tar.gz');// 设置附件上传类型
+		    $upload->exts      =     array('zip','rar','7z','tar.gz');// 设置附件上传类型
 		    $upload->rootPath  =     "./Uploads/"; // 设置附件上传根目录
 		    $upload->savePath  =     "./usr_$id/"; // 设置附件上传（子）目录
 		    $upload->saveName  =     "./src_$new_max_id"; // 设置文件名

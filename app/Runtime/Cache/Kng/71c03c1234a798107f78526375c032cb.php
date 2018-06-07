@@ -113,9 +113,9 @@
                 <button type="button" class="layui-btn like-btn" data-kid="<?php echo ($kid); ?>">
                     <i class="layui-icon">&#xe6c6;</i>点赞
                 </button>
-                <button type="button" class="layui-btn">
+                <?php if($file != '0'): ?><a type="button" class="layui-btn" href="<?php echo ($file); ?>">
                     <i class="layui-icon">&#xe857;</i>下载文件
-                </button>
+                </a><?php endif; ?>
             </div>
             <div class="kng_content">
                 <?php echo ($content); ?>
