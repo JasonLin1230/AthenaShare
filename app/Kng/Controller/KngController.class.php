@@ -15,6 +15,25 @@ class KngController extends BaseController {
             $this -> getCate = get_cate();
             $this->display();
         }
+        public function kng_detail(){
+            $this -> usr_name = $_SESSION ['usr_name'];
+            $this -> new_msg_num = new_message_count ();
+            $id = $_SESSION ['usr_id'];
+            $kng_id = $_GET ['kid'];
+            if ($kng_id == null) return;
+            $data = M ('Kng')
+                -> table ('ezsys_kng kng,ezsys_cate cate,ezsys_usr usr')
+                -> where ("kng_id=$kng_id and kng_owner_id=$id and kng.kng_cate_id = cate.cate_id and kng.kng_owner_id = usr.usr_id")
+                -> find ();
+            $this -> kid = $kng_id;
+            $this -> title = $data ['kng_name'];
+            $this -> type = $data ['cate_name'];
+            $this -> date = $data ['kng_update_date'];
+            $this -> author = $data ['usr_real_name'];
+            $this -> like = $data ['kng_like'];
+            $this -> content = $data ['kng_describe'];
+            $this->display();
+        }
 		/*
 		 * Author : JasonLin
 		 * Describe : 个人主页 -> 知识管理 -> 我的发布
@@ -36,7 +55,6 @@ class KngController extends BaseController {
             print_r(json_encode($arr));
 		}
 
-
 		/*
 		 * Author : JasonLin
 		 * Describe : 个人主页 -> 知识管理 -> 我的草稿
@@ -57,8 +75,6 @@ class KngController extends BaseController {
             $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
             print_r(json_encode($arr));
 		}
-
-		
 
 		/*
 		 * Author : JasonLin
@@ -140,13 +156,17 @@ class KngController extends BaseController {
 		public function like_kng () {
 			$id = $_SESSION ['usr_id'];
 			$kng_id = $_GET ['kid'];
-			if (! isset ($kng_id)) return;
-
-			$kng = M ('Kng'); 
-			//  and kng_owner_id<>$id
-			$res = $kng -> where ("kng_id=$kng_id")
-				-> setInc ('kng_like', 1); 
-			$this -> ajaxReturn ($res);
+			$kng = M ('Kng');
+			$res1 = $kng
+                -> where ("kng_id=$kng_id")
+				-> setInc ('kng_like', 1);
+            $res2 = $kng
+                -> add ("like_usr=$id,like_kid=$kng_id");
+            if ($res1 && $res2)
+                $arr = array('code' => 0,'msg'=>'点赞成功');
+            else
+                $arr = array('code' => 1,'msg'=>'点赞失败');
+            print_r(json_encode($arr));
 		}
 
 

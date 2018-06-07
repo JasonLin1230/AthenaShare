@@ -1,8 +1,9 @@
-layui.use(['element', 'form', 'table', 'layer'], function () {
+layui.use(['element', 'form', 'table', 'layer', 'jquery'], function () {
     var element = layui.element
         , form = layui.form
         , table = layui.table
-        , layer = layui.layer;
+        , layer = layui.layer
+        , $ = layui.$;
     element.on('tab(kng-tab)', function(data){
         switch(data.index)
         {
@@ -57,7 +58,8 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
     table.on('tool', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            window.location='kng_detail'
+            console.log(data);
+            window.location='kng_detail.html?kid='+data.kid;
         } else if(obj.event === 'delete'){
             layer.confirm('确认删除么', function(index){
                 layer.close(index);
@@ -91,4 +93,44 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
         data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
         return beauty_ajax("insert_kng", data.field);
     });
+    $(".layui-btn.like-btn").click(function () {
+        var cur_like=parseInt($(".min-font .like").html());
+        $(".min-font .like").html(cur_like+1);
+        var json=[];
+        json.kid=$(this).attr('data-kid');
+        $.ajax({
+            url: 'like_kng',
+            type: "post",
+            data: json,
+            success: function (data) {
+                data = JSON.parse(data);
+                if (data.code != 0) {
+                    if(data.msg!=""){
+                        layer.msg(data.msg, {
+                            icon: 2
+                            , shade: 0.1
+                            , time: 2000
+                        });
+                    }else{
+                        layer.msg('未知错误', {
+                            icon: 2
+                            , shade: 0.1
+                            , time: 2000
+                        });
+                    }
+                    location.reload();
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg(XMLHttpRequest.status + '信息获取失败', {
+                    icon: 2
+                    , shade: 0.1
+                    , time: 2000
+                })
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this;
+            }
+        });
+    })
 })
