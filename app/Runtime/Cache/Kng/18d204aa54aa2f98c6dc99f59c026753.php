@@ -1,76 +1,47 @@
-<?php if (!defined('THINK_PATH')) exit();?>
-<!doctype html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>管理员中心</title>
-    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_common.css"/>
-    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_main.css"/>
-    <script type="text/javascript" src="/AthenaShare/src/Public/js/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="/AthenaShare/src/Public/js/admin.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>AthenaShare</title>
+    <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
+    <link rel="stylesheet" href="/AthenaShare/src/Public/css/admin.css">
 </head>
-<body>
-<div class="topbar-wrap white">
-    <div class="topbar-inner clearfix">
-    </div>
-</div>
-<div class="container clearfix">
-    <div class="sidebar-wrap">
-        <div class="sidebar-title">
-            <h1>菜单</h1>
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-list">
-                <li>
-                    <a href="#"><i class="icon-font">&#xe018;</i>EZSYS管理</a>
-                    <ul class="sub-menu">        
-                        <li><a href="/AthenaShare/src/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
-                        <li><a href="/AthenaShare/src/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
-                        <li><a href="/AthenaShare/src/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
-                        <li><a href="/AthenaShare/src/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
-                    </ul>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-admin-logo">AthenaShare</div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item">
+                    <a href="index.html">管理中心</a>
+                </li>
+                <li class="layui-nav-item layui-this">
+                    <a href="admin_usr.html" class="layui-icon layui-icon-user">&nbsp;&nbsp;用户管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="admin_kng.html" class="layui-icon layui-icon-read">&nbsp;&nbsp;知识管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="admin_msg.html" class="layui-icon layui-icon-notice">&nbsp;&nbsp;消息管理</a>
                 </li>
             </ul>
         </div>
     </div>
-    <!--/sidebar-->
-    <div class="main-wrap">
-
-        <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.html">EZSYS管理</a><span class="crumb-step">&gt;</span><span class="crumb-name">用户管理</span></div>
-        </div>
-        <div class="result-wrap">
-            <div class="result-content">
-                <div class="result-content">
-                    <table class="result-tab" width="100%">
-                        <tr>
-                            <th>用户名</th>
-                            <th>真实姓名</th>
-                            <th>邮箱</th>
-                            <th>知识项数</th>
-                            <th>资源数</th>
-                            <th>操作</th>
-                        </tr>
-                        <?php if(is_array($usr_data)): foreach($usr_data as $key=>$vo): ?><tr>
-                            <td><?php echo ($vo["name"]); ?></td> 
-                            <td><?php echo ($vo["real_name"]); ?></td>
-                            <td><?php echo ($vo["email"]); ?></td>  
-                            <td><?php echo ($vo["personal_kng_count"]); ?></td>
-                            <td><?php echo ($vo["personal_src_count"]); ?></td>
-                            <td>
-                                <a class="link-del" href="#">屏蔽</a>
-                            </td>
-                        </tr><?php endforeach; endif; ?>
-                    </table>
-                    <div class="list-page"> 
-                    <?php echo ($page); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div class="layui-body content-main" style="padding: 15px;top: 0;">
+        <!-- 内容主体区域 -->
+        <table id="admin-usr" lay-filter="admin-usr"></table>
+        <script type="text/html" id="operation-bar-del">
+            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
+        </script>
     </div>
-    <!--/main-->
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        Copyright © 2018.AthenaShare
+    </div>
 </div>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/admin.js"></script>
 </body>
 </html>

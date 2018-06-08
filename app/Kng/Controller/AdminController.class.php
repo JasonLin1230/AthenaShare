@@ -57,10 +57,8 @@ class AdminController extends Controller {
     public function add_admin(){
         if (($admin_id = $this -> admin_check_login ()) < 0)
             $this -> redirect ('Admin/login');
-
         $new_data['admin_account'] = I('post.admin_account');
         $new_data['admin_passcode'] = md5(I('post.admin_pass'));
-
         $result = M("admin") -> add($new_data);
         if($result != false){
             $arr = array('code' => 0,'msg'=>'添加成功！');
@@ -71,38 +69,33 @@ class AdminController extends Controller {
     }
 
     //用户管理
-    public function admin_usr(){
-    if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
-
-        //分页
+    public function usr(){
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
         $usr_count = M('usr')->count();  //用户总数
-        $page = new \Think\Page($usr_count,8); 
-        $show = $page->show();
-        $this->assign('page',$show);
-        //取所有用户数据(+知识项)
+        $page = $_GET ['page'];
+        $limit = $_GET ['limit'];
         $usr_data = M("usr as usr")
-        ->field('usr.usr_account name,usr.usr_real_name real_name,usr.usr_email email,count(kng.kng_id) personal_kng_count')
+        ->field('usr.usr_id uid,usr.usr_account name,usr.usr_real_name real_name,usr.usr_phone_num phone,usr.usr_email email,count(kng.kng_id) personal_kng_count')
         ->join('ezsys_kng kng on kng.kng_owner_id = usr.usr_id','left')
-        //->join('ezsys_src src on src.src_owner_id = usr.usr_id')
-        ->limit($page->firstRow.','.$page->listRows)
+        ->limit(($page-1)*$limit,$limit)
         ->group('name')
         ->select();
-        //取所有用户上传资源数
-        $data = M("usr as usr")
-        ->field('count(src.src_id) personal_src_count')
-        ->join('ezsys_src src on src.src_owner_id = usr.usr_id','left')
-        ->limit($page->firstRow.','.$page->listRows)
-        ->group('usr.usr_account')
-        ->select();
+        $arr = array('code' => 0,'msg'=>'','count' => $usr_count,'data' => $usr_data);
+        print_r(json_encode($arr));
+    }
 
-        for($i=0;$i<$usr_count;$i++)
-        {
-            $usr_data[$i]['personal_src_count'] = $data[$i]['personal_src_count'];
-        }
-        
-        $this->assign('usr_data',$usr_data);   
-        $this->display();
+    //用户删除
+    public function del_usr(){
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
+        $uid = $_POST ['uid'];
+        $result = M("usr") -> where ("usr_id = $uid") -> delete ();
+        if ($result > 0)
+            $arr = array('code' => 0,'msg'=>'删除成功');
+        else
+            $arr = array('code' => 1,'msg'=>'删除失败');
+        print_r(json_encode($arr));
     }
 
     //知识管理

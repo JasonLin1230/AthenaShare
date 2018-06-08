@@ -14,16 +14,16 @@
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree">
                 <li class="layui-nav-item">
-                    <a href="">管理中心</a>
+                    <a href="#">管理中心</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="" class="layui-icon layui-icon-user">&nbsp;&nbsp;用户管理</a>
+                    <a href="admin_usr.html" class="layui-icon layui-icon-user">&nbsp;&nbsp;用户管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="" class="layui-icon layui-icon-read">&nbsp;&nbsp;知识管理</a>
+                    <a href="admin_kng.html" class="layui-icon layui-icon-read">&nbsp;&nbsp;知识管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="" class="layui-icon layui-icon-notice">&nbsp;&nbsp;消息管理</a>
+                    <a href="admin_msg.html" class="layui-icon layui-icon-notice">&nbsp;&nbsp;消息管理</a>
                 </li>
             </ul>
         </div>
