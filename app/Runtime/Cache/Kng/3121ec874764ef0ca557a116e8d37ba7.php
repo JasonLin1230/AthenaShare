@@ -20,7 +20,7 @@
             <a href="../Kng/kng.html">知识分享</a>
         </li>
         <li class="layui-nav-item <?php if($nav_select == 2): ?>layui-this<?php endif; ?>">
-            <a href="../Message/msg.html">消息中心</a>
+            <a href="../Message/msg.html">消息中心<?php if($new_msg_num > 0): ?><span class="layui-badge"><?php echo ($new_msg_num); ?></span><?php endif; ?></a>
         </li>
     </ul>
     <ul class="layui-nav layui-layout-right">

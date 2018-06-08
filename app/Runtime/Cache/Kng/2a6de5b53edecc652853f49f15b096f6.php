@@ -58,6 +58,6 @@
 
 <br><br><br><br>
 <script src="/AthenaShare/src/Public/layui/layui.js"></script>
-<script src="/AthenaShare/src/Public/js/index.js"></script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
 </body>
 </html>

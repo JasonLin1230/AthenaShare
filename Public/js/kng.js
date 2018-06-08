@@ -59,7 +59,6 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
     table.on('tool', function(obj){
         var data = obj.data;
         if(obj.event === 'detail'){
-            console.log(data);
             window.location='kng_detail.html?kid='+data.kid;
         } else if(obj.event === 'delete'){
             layer.confirm('确认删除么', function(index){

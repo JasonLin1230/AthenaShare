@@ -88,12 +88,7 @@ layui.use(['element', 'form', 'table', 'layer'], function () {
             layer.confirm('确认已读么', function(index){
                 layer.close(index);
                 return beauty_ajax("person_msg_read",data,function () {
-                    table.reload('read_msg', {
-                        url: "person_msg_recive"
-                    });
-                    table.reload('unread_msg', {
-                        url: "person_msg_new"
-                    });
+                    window.location='msg.html?msg_tab=1';
                 });
             });
         }

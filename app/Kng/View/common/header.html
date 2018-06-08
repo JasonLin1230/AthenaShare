@@ -9,7 +9,7 @@
             <a href="../Kng/kng.html">知识分享</a>
         </li>
         <li class="layui-nav-item <if condition='$nav_select eq 2'>layui-this</if>">
-            <a href="../Message/msg.html">消息中心</a>
+            <a href="../Message/msg.html">消息中心<if condition='$new_msg_num gt 0'><span class="layui-badge">{$new_msg_num}</span></if></a>
         </li>
     </ul>
     <ul class="layui-nav layui-layout-right">
