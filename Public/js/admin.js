@@ -1,24 +1,25 @@
-//弹窗添加管理员
-$(function ($) {
-    //弹出登录
-    $("#add").on('click', function () {
-        $("body").append("<div id='mask'></div>");
-        $("#mask").addClass("mask").fadeIn("slow");
-        $("#addBox").fadeIn("slow");
+layui.use(['element',  'layer', 'form', 'jquery','laypage', 'table'], function () {
+    var element = layui.element
+        , layer = layui.layer
+        , form = layui.form
+        , laypage = layui.laypage
+        , table = layui.table
+        , $ = layui.$
+        , new_admin_layer;
+    table.init('center');
+    $(".new-admin-btn").click(function () {
+        new_admin_layer = layer.open({
+            type: 1,
+            title: '新增管理员',
+            content: $('#new-admin').html()
+        });
     });
-    //按钮的透明度
-    $("#addbtn").hover(function () {
-        $(this).stop().animate({
-            opacity: '1'
-        }, 600);
-    }, function () {
-        $(this).stop().animate({
-            opacity: '0.4'
-        }, 1000);
-    });
-    //关闭
-    $(".close_btn").hover(function () { $(this).css({ color: 'black' }) }, function () { $(this).css({ color: '#999' }) }).on('click', function () {
-        $("#addBox").fadeOut("fast");
-        $("#mask").css({ display: 'none' });
+    form.on('submit(new-admin)', function (data) {
+        return beauty_ajax("add_admin", data.field, function(){
+            layer.close(new_admin_layer);
+            setTimeout(function () {
+                location.reload();
+            },1000);
+        });
     });
 });

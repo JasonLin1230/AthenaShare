@@ -20,8 +20,7 @@ class AdminController extends Controller {
        $result = M('admin')->where("admin_account='%s' AND admin_passcode='%s'",$usr,$pwd)->find();
        if($result){
             $_SESSION['admin_id'] = $result['admin_id'];
-            // $this->success('登陆成功', U ('index/index')); // ez 2016/5/6
-						$this -> redirect ('Admin/main'); // ez 2016/5/23
+			$this -> redirect ('Admin/index.html'); // ez 2016/5/23
        }else{
             $this->error('登陆失败');
        }
@@ -40,36 +39,35 @@ class AdminController extends Controller {
     //管理员退出
     public function logout(){
         session(null);
-        // $this->success('欢迎再来!',U('Login/index'),3);
-				$this -> redirect ('Admin/login'); // ez 2016/5/13
+		$this -> redirect ('Admin/login'); // ez 2016/5/13
     }
 
     //管理员个人中心页
-    public function main(){
+    public function index(){
     if (($admin_id = $this -> admin_check_login ()) < 0)
         $this -> redirect ('Admin/login');
-
       $this -> assign('adm_count', M('admin') -> count());
       $this -> assign('usr_count', M('usr') -> count());
       $this -> assign('kng_count', M('kng') -> count());
-      $this -> assign('src_count', M('src') -> count());
+      $this -> assign('msg_count', M('msg') -> count());
       $this -> display();
     }
 
     //新增管理员
     public function add_admin(){
-    if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
 
         $new_data['admin_account'] = I('post.admin_account');
         $new_data['admin_passcode'] = md5(I('post.admin_pass'));
 
         $result = M("admin") -> add($new_data);
         if($result != false){
-          $this->success('添加成功！');
+            $arr = array('code' => 0,'msg'=>'添加成功！');
         }else{
-          $this->error('添加失败！');
+            $arr = array('code' => 1,'msg'=>'添加失败！');
         }
+        print_r(json_encode($arr));
     }
 
     //用户管理
