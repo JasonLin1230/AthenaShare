@@ -20,7 +20,7 @@
             <a href="../Kng/kng.html">知识分享</a>
         </li>
         <li class="layui-nav-item <?php if($nav_select == 2): ?>layui-this<?php endif; ?>">
-            <a href="../Message/msg.html">消息中心</a>
+            <a href="../Message/msg.html">消息中心<?php if($new_msg_num > 0): ?><span class="layui-badge"><?php echo ($new_msg_num); ?></span><?php endif; ?></a>
         </li>
     </ul>
     <ul class="layui-nav layui-layout-right">
@@ -109,13 +109,13 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-block">
-                    <input type="text" name="email" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                    <input type="text" name="email" required lay-verify="required|email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">手机号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" required lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -135,19 +135,19 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">旧密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="old_pass" placeholder="请输入旧密码" autocomplete="off" class="layui-input">
+                    <input type="text" name="old_pass" placeholder="请输入旧密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">新密码</label>
                 <div class="layui-input-block">
-                    <input type="password" name="new_pass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="new_pass" placeholder="请输入新密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">确认密码</label>
                 <div class="layui-input-block">
-                    <input type="password" name="confirm_pass" placeholder="请确认新密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="confirm_pass" placeholder="请确认新密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item" style="margin-top: 15px;">
@@ -160,7 +160,7 @@
 </script>
     <script src="/AthenaShare/src/Public/layui/layui.js"></script>
     <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
-    <script src="/AthenaShare/src/Public/js/index.js"></script>
+    <script src="/AthenaShare/src/Public/js/base.js"></script>
     <script src="/AthenaShare/src/Public/js/info.js"></script>
 </div>
 </body>

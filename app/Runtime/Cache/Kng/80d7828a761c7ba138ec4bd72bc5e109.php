@@ -1,14 +1,14 @@
-<!doctype html>
+<?php if (!defined('THINK_PATH')) exit();?><!doctype html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>管理员中心</title>
-	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
-    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
-    <!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_common.css"/>-->
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_main.css"/>
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/admin.js"></script>
+	<link rel="shortcut icon" href="/AthenaShare/src/Public/images/favicon.ico" />
+    <link rel="stylesheet" href="/AthenaShare/src/Public/css/layui.css">
+    <!--<link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_common.css"/>-->
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_main.css"/>
+    <script type="text/javascript" src="/AthenaShare/src/Public/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/AthenaShare/src/Public/js/admin.js"></script>
 </head>
 <body>
 <div class="topbar-wrap white">
@@ -25,10 +25,10 @@
                 <li>
                     <a href="#"><i class="icon-font">&#xe018;</i>EZSYS管理</a>
                     <ul class="sub-menu">        
-                        <li><a href="__ROOT__/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
-						<li><a href="__ROOT__/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
+						<li><a href="/AthenaShare/src/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -45,15 +45,15 @@
                 <table class="insert-tab" width="100%">
                     <tbody><tr>
                         <th width="120"><i class="require-red">*</i>管理员人数：</th>
-                        <td>{$adm_count}&nbsp;&nbsp;（<a href="#" id="add">添加</a>）</td>
+                        <td><?php echo ($adm_count); ?>&nbsp;&nbsp;（<a href="#" id="add">添加</a>）</td>
                     </tr>
                         <tr>
                             <th><i class="require-red">*</i>用户人数：</th>
-                            <td><a href="admin_usr.html">{$usr_count}</a></td>
+                            <td><a href="admin_usr.html"><?php echo ($usr_count); ?></a></td>
                         </tr>
                         <tr>
                             <th><i class="require-red">*</i>知识项总数：</th>
-                            <td><a href="admin_kng.html">{$kng_count}</a></td>
+                            <td><a href="admin_kng.html"><?php echo ($kng_count); ?></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -65,7 +65,7 @@
 </div>
 
 <div id="addBox">
-<form method = 'post' action ='__ROOT__/index.php/Admin/add_admin'>
+<form method = 'post' action ='/AthenaShare/src/index.php/Admin/add_admin'>
     <div class="row1">
         新增管理员<a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="closeBtn">×</a>
     </div>

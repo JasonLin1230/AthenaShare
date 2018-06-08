@@ -30,7 +30,6 @@ class KngController extends BaseController {
             $this -> nav_select = 1;
             $this -> kng_tab = -1;
             $this -> msg_tab = -1;
-//            $id = $_SESSION ['usr_id'];
             $kng_id = $_GET ['kid'];
             if ($kng_id == null) return;
             $data = M ('Kng')
@@ -172,39 +171,6 @@ class KngController extends BaseController {
 
 		/*
 		 * Author : JasonLin
-		 * Describe : 根据传入的kid获取知识项实体
-		 */
-		public function get_kng () {
-            $usr_id = $_SESSION ['usr_id'];
-			$kng_id = $_GET ['kid'];
-			if ($kng_id == null) {
-				return;
-			}
-
-			$data = M ('Kng') -> where ("kng_id=$kng_id and kng_owner_id=$usr_id")
-				-> find ();
-			$rtn ['title'] = $data['kng_name'];
-			$rtn ['desc'] = $data['kng_describe'];
-			$rtn ['share'] = $data['kng_share'];
-			$this -> ajaxReturn ($rtn, 'json');
-		}
-
-		/*
-		 * Author : JasonLin
-		 * Describe : 根据传入的kid绑定知识项数据到页面kngdisp
-		 */
-		public function show_kng () {
-            $id = $_SESSION ['usr_id'];
-			$kng_id = $_GET ['kid'];
-			if ($kng_id == null) return;
-			$data = M ('Kng') -> where ("kng_id=$kng_id and kng_owner_id=$id")
-				-> find ();
-			$this -> content = $data ['kng_describe'];
-			$this -> display ('kngdisp');
-		}
-
-		/*
-		 * Author : JasonLin
 		 * Describe : 点赞知识点
 		 */
 		public function like_kng () {
@@ -231,8 +197,6 @@ class KngController extends BaseController {
             print_r(json_encode($arr));
 		}
 
-
-
         /*
          * Author : JasonLin
          * Describe : 发布草稿
@@ -250,25 +214,5 @@ class KngController extends BaseController {
             else
                 $arr = array('code' => 1,'msg'=>'发布失败');
             print_r(json_encode($arr));
-        }
-
-
-        /*
-         * Author : JasonLin
-         * Describe : 分享知识
-         */
-        public function share_kng(){
-			$kng_id = $_GET ['kid'];
-			if ($kng_id == null) return;
-			$new_data['kng_share'] = 1;  //将share 设为 1：分享
-			$result = M ('Kng') 
-				-> where ("kng_id=$kng_id")
-				-> save ($new_data);
-			if($result==false){
-				$rtn = 0;
-			}else{
-				$rtn = 1;
-			}
-			$this -> ajaxReturn($rtn);//分享知识  成功：1  失败：0
         }
 }

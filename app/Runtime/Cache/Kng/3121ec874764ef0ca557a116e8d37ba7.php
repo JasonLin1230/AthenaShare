@@ -185,19 +185,19 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">旧密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="old_pass" placeholder="请输入旧密码" autocomplete="off" class="layui-input">
+                    <input type="text" name="old_pass" placeholder="请输入旧密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">新密码</label>
                 <div class="layui-input-block">
-                    <input type="password" name="new_pass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="new_pass" placeholder="请输入新密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">确认密码</label>
                 <div class="layui-input-block">
-                    <input type="password" name="confirm_pass" placeholder="请确认新密码" autocomplete="off" class="layui-input">
+                    <input type="password" name="confirm_pass" placeholder="请确认新密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item" style="margin-top: 15px;">
@@ -208,13 +208,13 @@
         </form>
     </div>
 </script>
-    <script src="/AthenaShare/src/Public/layui/layui.js"></script>
-    <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace ('textfield');
-    </script>
-    <script src="/AthenaShare/src/Public/js/base.js"></script>
-    <script src="/AthenaShare/src/Public/js/kng.js"></script>
 </div>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace ('textfield');
+</script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/kng.js"></script>
 </body>
 </html>

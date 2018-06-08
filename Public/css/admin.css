@@ -1,0 +1,26 @@
+/*login*/
+#login {
+    color: #fff;
+    background: #222;
+}
+#login-wrapper {
+    background: url(../images/bg-login-top.png) top left repeat-x;
+}
+#login-top {
+    width: 100%;
+    padding: 100px 0 50px 0;
+    text-align: center;
+}
+#login-content {
+    text-align: left;
+    width: 300px;
+    margin: 0 auto;
+}
+#login-content label{
+    width: 70px;
+    display: inline-block;
+}
+#login-content input{
+    height: 26px;
+    line-height: 26px;
+}

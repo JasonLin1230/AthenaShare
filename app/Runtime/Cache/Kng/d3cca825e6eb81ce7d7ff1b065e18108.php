@@ -1,14 +1,14 @@
-
+<?php if (!defined('THINK_PATH')) exit();?>
 <!doctype html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>管理员中心</title>
-    <link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_common.css"/>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_main.css"/>
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/admin.js"></script>
+    <link rel="shortcut icon" href="/AthenaShare/src/Public/images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_common.css"/>
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_main.css"/>
+    <script type="text/javascript" src="/AthenaShare/src/Public/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/AthenaShare/src/Public/js/admin.js"></script>
 </head>
 <body>
 <div class="topbar-wrap white">
@@ -25,10 +25,10 @@
                 <li>
                     <a href="#"><i class="icon-font">&#xe018;</i>EZSYS管理</a>
                     <ul class="sub-menu">
-                        <li><a href="__ROOT__/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -42,25 +42,21 @@
         </div>
         <div class="search-wrap">
             <div class="search-content">
-                <form action="__ROOT__/index.php/admin/admin_kng" id='form1' method='get'>
+                <form action="/AthenaShare/src/index.php/admin/admin_kng" id='form1' method='get'>
                     <table class="search-tab">
                         <tr>
                             <th width="120">选择分类:</th>
                             <td>
                                 <select name="cateId" onchange="submit()">
                                     <option value=-1>全部</option>
-                                    <foreach name="cate" item="vo">
-                                        <if condition="$vo.id eq $selectCate">
-                                           <option value={$vo.id} selected="selected">{$vo.name}</option>
-                                        <else/>
-                                           <option value={$vo.id}>{$vo.name}</option>
-                                        </if>
-                                    </foreach>
+                                    <?php if(is_array($cate)): foreach($cate as $key=>$vo): if($vo["id"] == $selectCate): ?><option value=<?php echo ($vo["id"]); ?> selected="selected"><?php echo ($vo["name"]); ?></option>
+                                        <?php else: ?>
+                                           <option value=<?php echo ($vo["id"]); ?>><?php echo ($vo["name"]); ?></option><?php endif; endforeach; endif; ?>
                                 </select>
                             </td>
                             <th width="70"><a href="#" id="add">添加分类</a></th>
                             <th width="70">搜索:</th>
-                            <td><input type="text" class="common-text" placeholder="请输入知识名关键字" name="keywords" value="{$keys}" id=""></td>
+                            <td><input type="text" class="common-text" placeholder="请输入知识名关键字" name="keywords" value="<?php echo ($keys); ?>" id=""></td>
                             <td><input type="submit" class="btn btn-primary btn2"></td>
                         </tr>
                     </table>
@@ -68,7 +64,7 @@
             </div>
         </div>
         <div class="result-wrap">
-            <form action="__ROOT__/index.php/admin/delete_kng" name="myform" id="myform" method="post">
+            <form action="/AthenaShare/src/index.php/admin/delete_kng" name="myform" id="myform" method="post">
                 <div class="result-title">
                     <div class="result-list">
                         <a id="batchDel" onclick="myform.submit()"><i class="icon-font"></i>批量删除</a>
@@ -84,19 +80,17 @@
                             <th>发布时间</th>
                             <th>热度</th>
                         </tr>
-                        <foreach name='kng_data' item='vo'>
-                        <tr>
-                            <td class="tc"><input type="checkbox" name="id[]" value={$vo.id}></td>
-                            <td class='kName'><a href="#">{$vo.name}</a></td>
-                            <td>{$vo.cate}</td>
-                            <td>{$vo.owner}</td>
-                            <td>{$vo.date}</td>
-                            <td>{$vo.hot}</td>
-                        </tr>
-                        </foreach>
+                        <?php if(is_array($kng_data)): foreach($kng_data as $key=>$vo): ?><tr>
+                            <td class="tc"><input type="checkbox" name="id[]" value=<?php echo ($vo["id"]); ?>></td>
+                            <td class='kName'><a href="#"><?php echo ($vo["name"]); ?></a></td>
+                            <td><?php echo ($vo["cate"]); ?></td>
+                            <td><?php echo ($vo["owner"]); ?></td>
+                            <td><?php echo ($vo["date"]); ?></td>
+                            <td><?php echo ($vo["hot"]); ?></td>
+                        </tr><?php endforeach; endif; ?>
                     </table>
                     <div class="list-page"> 
-                    {$page}
+                    <?php echo ($page); ?>
                     </div>
                 </div>
             </form>
@@ -107,7 +101,7 @@
 </div>
 
 <div id="addBox">
-<form method = 'post' action ='__ROOT__/index.php/Admin/add_cate'>
+<form method = 'post' action ='/AthenaShare/src/index.php/Admin/add_cate'>
     <div class="row1">
         添加分类<a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="closeBtn">×</a>
     </div>

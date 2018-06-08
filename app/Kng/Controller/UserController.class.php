@@ -52,52 +52,8 @@ class UserController extends BaseController{
             print_r(json_encode($arr));
 		}
 
-
 		/*
-		 * Author : zzk
-		 * Describe : 修改密码。
-		*/
-		public function reset_passcode() {
-			// ez 2016/5/14
-			// $usr_id = $_SESSION ['usr_id'];
-			if(($usr_id = check_login ()) < 0)
-				$this -> redirect('Login/index'); 
-
-			$passcode = md5 ($_POST ['passcode']);
-			$new_passcode = md5 ($_POST ['new_passcode']);
-
-			$usr = M ('usr');
-			$data = $usr -> find ($usr_id);
-			if($passcode != $data ['usr_passcode']) {
-				// error ('原密码输入有误！');
-				$this -> ajaxReturn (-1); // former code error.
-			} else {
-				$new_data ['usr_passcode'] = $new_passcode;
-			}
-			$rtn = $usr -> where ("usr_id=$usr_id") -> save ($new_data);
-			if ($rtn != 1){
-				$rtn = -1;
-			} else {   //如果原密码和新密码一样，
-				session(null);
-				$rtn = 1;
-			}
-			$this -> ajaxReturn ($rtn);
-		}
-
-
-		/*
-		 * Author : zzk
-		 * Describe : 找回密码。
-		 */
-		public function forget_passcode() {
-			$this -> display ();
-		}
-
-
-
-
-		/*
-		 * Author : zzk
+		 * Author : JasonLin
 		 * Describe : 发送验证码到邮件。
 		 */
 		public function send_email() {
@@ -118,7 +74,7 @@ class UserController extends BaseController{
 			$time = date('Y-m-d H:i:s');
 			$subject = "EZSYS密码找回";
 			$captcha = GetRandNum(6);
-			$body = "<p>尊敬的{$name}，您好。<br/>    您于{$time}使用找回密码功能，我们将您的密码重置为<i>{$captcha}</i>，请您及时登录EZSYS进行修改密码操作。</p>";
+			$body = "<p>尊敬的{$name}，您好。<br/>    您于{$time}使用找回密码功能，我们将您的密码重置为<i>{$captcha}</i>，请您及时登录AthenaShare进行修改密码操作。</p>";
 			//echo "<script>alert('$name');</script>";
 
 			if(ezsys_send_mail($email,$name,$subject,$body,null)){
@@ -130,37 +86,4 @@ class UserController extends BaseController{
 				$this -> error("邮件发送失败！");
 			}
 		}
-
-
-
-		/*
-		 * Author : zzk
-		 * Describe : 找回密码响应，判断用户名是否存在。
-		 */
-	    public function is_account(){ //account是否存在
-	    	$account = I('get.account');
-	    	$rtn = M('usr') -> where("usr_account = '$account'") -> field('usr_id') -> find();
-			if($rtn == null){
-				$this -> ajaxReturn(-1);//如果用户输入的 account 不存在，则返回（-1）
-			}else{
-				$this -> ajaxReturn($rtn);
-			}
-	    }
-	    
-
-	    /*
-		 * Author : zzk
-		 * Describe : 找回密码响应，判断邮箱是否存在。
-		 */
-	    public function is_email(){  //若account存在，判断email是否正确
-	    	$account = I('get.account');
-	    	$email = I('get.email');
-	    	$data = M('usr') -> where("usr_account = '$account'") -> field('usr_email') -> find();
-	    	if($data['usr_email'] == "$email"){
-	    		$rtn = 1;
-	    	}else{
-	    		$rtn = -1;
-	    	}
-	    	$this -> ajaxReturn($rtn);
-	    }
 }

@@ -1,13 +1,13 @@
-
+<?php if (!defined('THINK_PATH')) exit();?>
 <!doctype html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>管理员中心</title>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_common.css"/>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_main.css"/>
-    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/admin.js"></script>
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_common.css"/>
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_main.css"/>
+    <script type="text/javascript" src="/AthenaShare/src/Public/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/AthenaShare/src/Public/js/admin.js"></script>
 </head>
 <body>
 <div class="topbar-wrap white">
@@ -24,10 +24,10 @@
                 <li>
                     <a href="#"><i class="icon-font">&#xe018;</i>EZSYS管理</a>
                     <ul class="sub-menu">        
-                        <li><a href="__ROOT__/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -51,21 +51,19 @@
                             <th>资源数</th>
                             <th>操作</th>
                         </tr>
-                        <foreach name = "usr_data" item = "vo">
-                        <tr>
-                            <td>{$vo.name}</td> 
-                            <td>{$vo.real_name}</td>
-                            <td>{$vo.email}</td>  
-                            <td>{$vo.personal_kng_count}</td>
-                            <td>{$vo.personal_src_count}</td>
+                        <?php if(is_array($usr_data)): foreach($usr_data as $key=>$vo): ?><tr>
+                            <td><?php echo ($vo["name"]); ?></td> 
+                            <td><?php echo ($vo["real_name"]); ?></td>
+                            <td><?php echo ($vo["email"]); ?></td>  
+                            <td><?php echo ($vo["personal_kng_count"]); ?></td>
+                            <td><?php echo ($vo["personal_src_count"]); ?></td>
                             <td>
                                 <a class="link-del" href="#">屏蔽</a>
                             </td>
-                        </tr>
-                        </foreach>
+                        </tr><?php endforeach; endif; ?>
                     </table>
                     <div class="list-page"> 
-                    {$page}
+                    <?php echo ($page); ?>
                     </div>
                 </div>
             </div>

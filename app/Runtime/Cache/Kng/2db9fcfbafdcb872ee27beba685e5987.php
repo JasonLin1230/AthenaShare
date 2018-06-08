@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 <head>
 	<title>系统注册</title>
 	<meta http-equiv="content-Type" content="text/html" charset="utf-8" />
-	<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/signup.css" />
-	<link rel="shortcut icon" href="__PUBLIC__/images/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/signup.css" />
+	<link rel="shortcut icon" href="/AthenaShare/src/Public/images/favicon.ico" />
 	
-	<script type="text/javascript" src="__PUBLIC__/scripts/jquery-1.12.3.min.js"></script>
-	<script type="text/javascript" src="__PUBLIC__/scripts/sys_utils.js"></script>
-	<script type="text/javascript" src="__PUBLIC__/scripts/signup.js"></script>
+	<script type="text/javascript" src="/AthenaShare/src/Public/scripts/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="/AthenaShare/src/Public/scripts/sys_utils.js"></script>
+	<script type="text/javascript" src="/AthenaShare/src/Public/scripts/signup.js"></script>
 
 </head>
 <body>
@@ -16,9 +16,9 @@
 		<div class="ucSimpleHeader">
 			<a href="##" class="meizuLogo"></a>
 			<div class="trigger">
-				<a href="__ROOT__/index.php/Login">登录</a>
+				<a href="/AthenaShare/src/index.php/Login">登录</a>
 				<span>&nbsp;|&nbsp;</span>
-				<a href="__ROOT__/index.php/Main/main_page">主页</a>
+				<a href="/AthenaShare/src/index.php/Main/main_page">主页</a>
 			</div>
 		</div>
 		<form id="#mainForm2" class="mainForm mainForm1">

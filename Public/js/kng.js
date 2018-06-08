@@ -126,15 +126,42 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
     });
     form.on('submit(kng-release)', function (data) {//发布
         data.field['is_script']='0';
+        var kng_desc=CKEDITOR.instances.textfield.getData();
+        if(kng_desc == ''){
+            layer.msg('内容不能为空', {
+                icon: 2
+                , shade: 0.1
+                , time: 2000
+            });
+            return false;
+        }
         data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
         return beauty_ajax("insert_kng", data.field);
     });
     form.on('submit(kng-save)', function (data) {//保存
         data.field['is_script']='1';
+        var kng_desc=CKEDITOR.instances.textfield.getData();
+        if(kng_desc == ''){
+            layer.msg('内容不能为空', {
+                icon: 2
+                , shade: 0.1
+                , time: 2000
+            });
+            return false;
+        }
         data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
         return beauty_ajax("insert_kng", data.field);
     });
     form.on('submit(kng-insert)', function (data) {//insert
+        var kng_desc=CKEDITOR.instances.textfield.getData();
+        if(kng_desc == ''){
+            layer.msg('内容不能为空', {
+                icon: 2
+                , shade: 0.1
+                , time: 2000
+            });
+            return false;
+        }
         data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
         return beauty_ajax("insert_kng", data.field);
     });

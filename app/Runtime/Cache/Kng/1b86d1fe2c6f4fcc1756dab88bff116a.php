@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html class="login-html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>AthenaShare</title>
-    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css">
-    <link rel="stylesheet" href="__PUBLIC__/css/base.css">
+    <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
+    <link rel="stylesheet" href="/AthenaShare/src/Public/css/base.css">
 </head>
 <body class="login-body">
 <div class="layui-fluid">
@@ -39,9 +39,9 @@
         </form>
     </div>
 </div>
-<script src="__PUBLIC__/layui/layui.js"></script>
-<script src="__PUBLIC__/js/base.js"></script>
-<script src="__PUBLIC__/js/login.js"></script>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/login.js"></script>
 <script>
     document.getElementsByClassName("login-body")[0].style.backgroundImage='url(http://img.infinitynewtab.com/wallpaper/' + Math.floor(Math.random()*4050) + '.jpg)';
 </script>

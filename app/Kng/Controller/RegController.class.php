@@ -4,40 +4,28 @@ use Think\Controller;
 
 class RegController extends Controller {
 	public function index(){
-		$this -> display ('signup');
+		$this -> display ();
   }
 
-	// ez 2016/5/25 
   public function reg(){
-  	$data ['usr_account']=$_POST['usr'];
-  	$data ['usr_passcode']=md5($_POST['pwd']);
-  	// $data['usr_real_name']=$_POST['realname'];
-		$data ['usr_email'] = $_POST ['mail'];
-		$data ['usr_real_name'] = $_POST ['usr'];
-  	// $data ['usr_gender']=$_POST['sex'];
-  	$m=M("usr");
-  	$msg=$m->create($data);
-  	$result=$m -> add();
-		$this -> ajaxReturn ($result);
-  	// if($result==true){
-  	// 	// setcookie("username",$data['usr']);
-  	// 	// $this->success("注册成功",U('Login/index'));
-  	// }else{
-  	// 	$this->error("注册失败，用户名已经被占用");
-  	// }
-  }
-
-
-  //判断用户名是否存在  zzk 2016/5/31
-  public function checkreg(){
-    $account = $_POST['usr'];
-    $data = M("usr") -> where("usr_account = '$account'") -> find();
-    if($data != null){
-      $rtn = -1;
-    }else{
-      $rtn = 1;
+      $username=$_POST['username'];
+      $data ['usr_passcode']=md5($_POST['password']);
+      $data ['usr_email'] = $_POST ['email'];
+      $data ['usr_account'] = $username;
+      $data ['usr_real_name'] = $username;
+      $m = M("usr");
+      $isreg = M("usr") -> where("usr_account = '$username'") -> find();
+      if($isreg){
+          $arr = array('code' => 1,'msg'=>'该用户名已被占用！');
+      }else{
+          $msg=$m->create($data);
+          $result = $m -> add();
+          if($result){
+             $arr = array('code' => 0,'msg'=>'注册成功！');
+          }else{
+             $arr = array('code' => 1,'msg'=>'系统错误！');
+          }
     }
-    $this -> ajaxReturn ($rtn);
+    print_r(json_encode($arr));
   }
-
 }

@@ -1,63 +1,59 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html class="login-html">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>登录</title>
-<link rel="shortcut icon" href="/AthenaShare/src/Public/images/favicon.ico" />
-<link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
-<link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/reset.css" />
-<link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/login.css" />
-<link rel="Stylesheet" type="text/css" href="/AthenaShare/src/Public/css/forgetPwdDialog.css" />
-<script type="text/javascript" src="/AthenaShare/src/Public/js/jquery-1.12.3.min.js"></script>
-<script type="text/javascript" src="/AthenaShare/src/Public/js/sys_utils.js"></script>
-<script type="text/javascript" src="/AthenaShare/src/Public/js/login.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>AthenaShare</title>
+	<link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
+	<link rel="stylesheet" href="/AthenaShare/src/Public/css/base.css">
 </head>
-<body>
-<div class="container">
-	<section id="content">
-		<form action="/AthenaShare/src/index.php/Login/checklog" method = 'post'>
-			<h1>登录</h1>
-			<div>
-				<input type="text" placeholder="账号" id="username" name = "usr"/>
+<body class="login-body">
+<div class="layui-fluid">
+	<div class="content">
+		<div class="user-login-box user-login-header">
+			<h2>AthenaShare</h2>
+		</div>
+		<form action="" class="layui-form">
+			<div class="layui-form-item">
+				<label class="user-login-icon layui-icon layui-icon-username" for="user-login-username"></label>
+				<input type="text" name="username" id="user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
 			</div>
-			<div>
-				<input type="password" placeholder="密码" id="password" name = "pwd"/>
+			<div class="layui-form-item">
+				<label class="user-login-icon layui-icon layui-icon-password" for="user-login-password"></label>
+				<input type="password" name="password" id="user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
 			</div>
-			<div>
-				<!-- <input type="submit" value="Log in" /> -->
-				<input type="submit" value="登录" class="btn btn-primary" id="js-btn-login"/>
-				<input type="submit" value="注册" formaction = '/AthenaShare/src/index.php/Reg' />
-				<a href="#" id="forget">忘记密码？</a>
-				<!-- <a href="#">Register</a> -->
+			<div class="layui-form-item">
+				<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="user-login-submit">登 入</button>
 			</div>
-		</form><!-- form -->
-	</section><!-- content -->
+			<div class="layui-form-item">
+				<a href="javascript:;" id="forgetpass-btn">忘记密码</a>
+				<a href="../Reg/index.html" style="float: right;">注册</a>
+			</div>
+		</form>
+	</div>
 </div>
-<!-- container -->
-<!-- 忘记密码 -->
-<div id="ForgetBox">
-<form method = 'post' action ='/AthenaShare/src/index.php/User/send_email' name='form1'>
-    <div class="row1">
-        密码找回<a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="closeBtn">×</a>
-    </div>
-    <div class="row">
-        账号 <span class="inputBox">
-            <input type="text" id="txtName" name='usr_account' placeholder="请输入您的账号" />
-        	</span><i id='acc_warn'></i>
-    </div>
-    <div class="row">
-        邮箱 <span class="inputBox">
-            <input type="text" id="txtEmail" name='usr_email' placeholder="请输入您预留的邮箱" />
-        	</span><i id='ema_warn'></i>
-    </div>
-    <div class="row">
-        <a id="forgetbtn" onclick="send_email()">找回</a>
-    </div>
-</form>
-</div>
-
-<br><br><br><br>
+<script type="text/html" id="forgetpass">
+	<div>
+		<form class="layui-form " method="post" action="#" style="padding: 15px 20px 0;">
+			<div class="layui-form-item">
+				<input type="text" name="usr_account" placeholder="请输入您的账号" autocomplete="off" lay-verify="required" class="layui-input">
+			</div>
+			<div class="layui-form-item">
+				<input type="text" name="usr_email" placeholder="请输入您的预留邮箱" autocomplete="off" lay-verify="required" class="layui-input">
+			</div>
+			<div class="layui-form-item" style="margin-top: 15px;">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="forgetpass">立即提交</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</script>
 <script src="/AthenaShare/src/Public/layui/layui.js"></script>
 <script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/login.js"></script>
+<script>
+	document.getElementsByClassName("login-body")[0].style.backgroundImage='url(http://img.infinitynewtab.com/wallpaper/' + Math.floor(Math.random()*4050) + '.jpg)';
+</script>
 </body>
 </html>

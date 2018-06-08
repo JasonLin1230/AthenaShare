@@ -1,13 +1,13 @@
-
+<?php if (!defined('THINK_PATH')) exit();?>
 <!doctype html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>管理员中心</title>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_common.css"/>
-    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/admin_main.css"/>
-    <script type="text/javascript" src="__PUBLIC__/scripts/jquery-1.12.3.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/scripts/admin.js"></script>
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_common.css"/>
+    <link rel="stylesheet" type="text/css" href="/AthenaShare/src/Public/css/admin_main.css"/>
+    <script type="text/javascript" src="/AthenaShare/src/Public/scripts/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript" src="/AthenaShare/src/Public/scripts/admin.js"></script>
 </head>
 <body>
 <div class="topbar-wrap white">
@@ -24,11 +24,11 @@
                 <li>
                     <a href="#"><i class="icon-font">&#xe018;</i>EZSYS管理</a>
                     <ul class="sub-menu">        
-                        <li><a href="__ROOT__/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/admin_src"><i class="icon-font">&#xe005;</i>资源管理</a></li>
-                        <li><a href="__ROOT__/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/main"><i class="icon-font">&#xe017;</i>管理中心</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_usr"><i class="icon-font">&#xe003;</i>用户管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_kng"><i class="icon-font">&#xe006;</i>知识管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/admin_src"><i class="icon-font">&#xe005;</i>资源管理</a></li>
+                        <li><a href="/AthenaShare/src/index.php/admin/logout"><i class="icon-font">&#xe020;</i>退出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -42,11 +42,11 @@
         </div>
         <div class="search-wrap">
             <div class="search-content">
-                <form action="__ROOT__/index.php/admin/admin_src" id='form1' method='get'>
+                <form action="/AthenaShare/src/index.php/admin/admin_src" id='form1' method='get'>
                     <table class="search-tab">
                         <tr>
                             <th width="70">搜索:</th>
-                            <td><input type="text" class="common-text" placeholder="请输入资源名关键字" name="keywords" value="{$keys}" id=""></td>
+                            <td><input type="text" class="common-text" placeholder="请输入资源名关键字" name="keywords" value="<?php echo ($keys); ?>" id=""></td>
                             <td><input type="submit" class="btn btn-primary btn2"></td>
                         </tr>
                     </table>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="result-wrap">
-            <form action="__ROOT__/index.php/admin/delete_src" name="myform" id="myform" method="post">
+            <form action="/AthenaShare/src/index.php/admin/delete_src" name="myform" id="myform" method="post">
                 <div class="result-title">
                     <div class="result-list">
                         <a id="batchDel" onclick="myform.submit()"><i class="icon-font"></i>批量删除</a>
@@ -69,18 +69,16 @@
                             <th>上传时间</th>
                             <th>下载次数</th>
                         </tr>
-                        <foreach name='src_data' item='vo'>
-                        <tr>
-                            <td class="tc"><input type="checkbox" name="id[]" value={$vo.id}></td>
-                            <td class='kName'><a href="#">{$vo.name}</a></td>
-                            <td>{$vo.owner}</td>
-                            <td>{$vo.date}</td>
-                            <td>{$vo.down}</td>
-                        </tr>
-                        </foreach>
+                        <?php if(is_array($src_data)): foreach($src_data as $key=>$vo): ?><tr>
+                            <td class="tc"><input type="checkbox" name="id[]" value=<?php echo ($vo["id"]); ?>></td>
+                            <td class='kName'><a href="#"><?php echo ($vo["name"]); ?></a></td>
+                            <td><?php echo ($vo["owner"]); ?></td>
+                            <td><?php echo ($vo["date"]); ?></td>
+                            <td><?php echo ($vo["down"]); ?></td>
+                        </tr><?php endforeach; endif; ?>
                     </table>
                     <div class="list-page"> 
-                    {$page}
+                    <?php echo ($page); ?>
                     </div>
                 </div>
             </form>

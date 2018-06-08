@@ -11,6 +11,24 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
             content: $('#passwordTp').html()
         });
     });
+    form.verify({
+        username: function(value, item){
+            if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                return '用户名不能有特殊字符';
+            }
+            if(/^\d+\d+\d$/.test(value)){
+                return '用户名不能全为数字';
+            }
+        }
+        ,pass: function(value, item){
+            if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                return '密码不能有特殊字符';
+            }
+            if(/^\d+\d+\d$/.test(value)){
+                return '密码不能全为数字';
+            }
+        }
+    });
     form.on('submit(password)', function (data) {
         if (data.field.new_pass != data.field.confirm_pass) {
             layer.msg('两次密码输入不同！', {icon: 5});
