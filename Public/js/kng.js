@@ -25,7 +25,7 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
     table.render({
         elem: '#my_share'
         , id: 'my_share'
-        , height: 320
+        , height: 400
         , url: 'personal_kng_mine' //数据接口
         , cellMinWidth: 60
         , page: true //开启分页
@@ -42,7 +42,7 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
     table.render({
         elem: '#draft'
         , id: 'draft'
-        , height: 320
+        , height: 400
         , url: 'personal_kng_script' //数据接口
         , cellMinWidth: 60
         , page: true //开启分页
@@ -125,9 +125,6 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
             }
         });
     });
-    $(".upload-btn").click(function () {
-        return false;
-    });
     form.on('submit(kng-release)', function (data) {//发布
         data.field['is_script']='0';
         data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
@@ -135,6 +132,10 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
     });
     form.on('submit(kng-save)', function (data) {//保存
         data.field['is_script']='1';
+        data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
+        return beauty_ajax("insert_kng", data.field);
+    });
+    form.on('submit(kng-insert)', function (data) {//insert
         data.field['kng_desc']=CKEDITOR.instances.textfield.getData();
         return beauty_ajax("insert_kng", data.field);
     });
@@ -146,6 +147,10 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
         ,bindAction: '.upload-btn'
         ,accept: 'file' //普通文件
         ,exts: 'zip|rar|7z' //只允许上传压缩文件
+        ,choose: function(obj){
+            $(".hasfile").removeClass("layui-hide");
+            $(".nofile").addClass("layui-hide");
+        }
         ,before: function () {
             layer.msg('正在提交',{
                 icon: 16
@@ -154,11 +159,10 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
             });
         }
         ,done: function(data){
-            console.log(data);
             if (data.code === 0) {
                 $("input[name='file_name']").val(data.file_name);
                 $("input[name='file_path']").val(data.file_path);
-                $("#release-send").click();
+                $("#insert").click();
             } else {
                 if(data.msg!=""){
                     layer.msg(data.msg, {

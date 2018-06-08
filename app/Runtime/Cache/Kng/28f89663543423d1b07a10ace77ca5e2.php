@@ -16,25 +16,21 @@
         <li class="layui-nav-item">
             <a href="../Main/index.html">首页</a>
         </li>
-        <li class="layui-nav-item">
-            <a href="../Kng/kng">知识分享</a>
+        <li class="layui-nav-item <?php if($nav_select == 1): ?>layui-this<?php endif; ?>">
+            <a href="../Kng/kng.html">知识分享</a>
         </li>
-        <li class="layui-nav-item">
-            <a href="../Message/msg">消息中心</a>
-        </li>
-        <li class="layui-nav-item">
-            <a href="../Src/src">资源管理</a>
+        <li class="layui-nav-item <?php if($nav_select == 2): ?>layui-this<?php endif; ?>">
+            <a href="../Message/msg.html">消息中心</a>
         </li>
     </ul>
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <!--<?php echo (session('usr_name')); ?>-->
                 <?php echo ($usr_name); ?>
             </a>
             <dl class="layui-nav-child">
                 <dd>
-                    <a href="../User/info">基本资料</a>
+                    <a href="../User/info.html">基本资料</a>
                 </dd>
                 <dd>
                     <a href="javascript:;" id="password-btn">修改密码</a>
@@ -54,45 +50,31 @@
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="layui-icon layui-icon-read" href="javascript:;">&nbsp;&nbsp;知识分享</a>
                 <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../Kng/kng">我的发布</a>
+                    <dd class="<?php if($kng_tab == 0): ?>layui-this<?php endif; ?>">
+                        <a href="../Kng/kng.html?kng_tab=0">我的发布</a>
                     </dd>
-                    <dd>
-                        <a href="">我的草稿</a>
+                    <dd class="<?php if($kng_tab == 1): ?>layui-this<?php endif; ?>">
+                        <a href="../Kng/kng.html?kng_tab=1">我的草稿</a>
                     </dd>
-                    <dd>
-                        <a href="">编写最新</a>
+                    <dd class="<?php if($kng_tab == 2): ?>layui-this<?php endif; ?>">
+                        <a href="../Kng/kng.html?kng_tab=2">编写最新</a>
                     </dd>
                 </dl>
             </li>
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="layui-icon layui-icon-notice" href="javascript:;">&nbsp;&nbsp;消息中心</a>
                 <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../Message/msg">已发消息</a>
+                    <dd class="<?php if($msg_tab == 0): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=0">已发消息</a>
                     </dd>
-                    <dd>
-                        <a href="">已读消息</a>
+                    <dd class="<?php if($msg_tab == 1): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=1">已读消息</a>
                     </dd>
-                    <dd>
-                        <a href="">未读消息</a>
+                    <dd class="<?php if($msg_tab == 2): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=2">未读消息</a>
                     </dd>
-                    <dd>
-                        <a href="">新建消息</a>
-                    </dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item layui-nav-itemed">
-                <a class="layui-icon layui-icon-component" href="javascript:;">&nbsp;&nbsp;资源管理</a>
-                <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../Src/src">私有资源</a>
-                    </dd>
-                    <dd>
-                        <a href="">共享资源</a>
-                    </dd>
-                    <dd>
-                        <a href="">新建资源</a>
+                    <dd class="<?php if($msg_tab == 3): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=3">新建消息</a>
                     </dd>
                 </dl>
             </li>

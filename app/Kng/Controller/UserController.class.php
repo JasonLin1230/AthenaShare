@@ -9,6 +9,8 @@ class UserController extends BaseController{
 		*/
 	    public function info(){
             $this -> usr_name = $_SESSION ['usr_name'];
+            $this -> kng_tab = -1;
+            $this -> msg_tab = -1;
             $this->display();
         }
 		public function get_info () {

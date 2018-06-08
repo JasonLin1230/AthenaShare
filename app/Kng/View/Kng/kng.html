@@ -14,12 +14,12 @@
         <!-- 内容主体区域 -->
         <div class="layui-tab layui-tab-card" lay-filter="kng-tab">
             <ul class="layui-tab-title">
-                <li class="layui-this">我的发布</li>
-                <li>我的草稿</li>
-                <li>编写最新</li>
+                <li class="<if condition='($kng_tab eq -1) OR ($kng_tab eq 0)'>layui-this</if>">我的发布</li>
+                <li class="<if condition='$kng_tab eq 1'>layui-this</if>">我的草稿</li>
+                <li class="<if condition='$kng_tab eq 2'>layui-this</if>">编写最新</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
+                <div class="layui-tab-item <if condition='($kng_tab eq -1) OR ($kng_tab eq 0)'>layui-show</if>">
                     <div class="table-wrap">
                         <table id="my_share" lay-filter="my_share"></table>
                         <script type="text/html" id="operation-bar-share">
@@ -28,7 +28,7 @@
                         </script>
                     </div>
                 </div>
-                <div class="layui-tab-item">
+                <div class="layui-tab-item <if condition='$kng_tab eq 1'>layui-show</if>">
                     <div class="table-wrap">
                         <table id="draft" lay-filter="draft"></table>
                         <script type="text/html" id="operation-bar-draft">
@@ -38,7 +38,7 @@
                         </script>
                     </div>
                 </div>
-                <div class="layui-tab-item">
+                <div class="layui-tab-item <if condition='$kng_tab eq 2'>layui-show</if>">
                     <form class="layui-form " action="" enctype="multipart/form-data" lay-filter="new-kng" id="new-kng">
                         <div class="layui-row">
                             <div class="layui-col-sm6">
@@ -88,10 +88,17 @@
                         <input type="text" name="file_path" class="layui-hide">
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn upload-btn">发布</button>
-                                <button class="layui-btn upload-btn">保存</button>
-                                <button class="layui-btn layui-hide" lay-submit lay-filter="kng-release" id="release-send">发布</button>
-                                <button class="layui-btn layui-hide" lay-submit lay-filter="kng-save" id="save-send">保存</button>
+                                <div class="nofile">
+                                    <button class="layui-btn" lay-submit lay-filter="kng-release">发布</button>
+                                    <button class="layui-btn" lay-submit lay-filter="kng-save">保存</button>
+                                </div>
+                                <div class="hasfile layui-hide">
+                                    <label class="layui-btn upload-btn" for="release-upload">发布</label>
+                                    <input type="radio" name="is_script" value="0" id="release-upload" lay-ignore class="layui-hide">
+                                    <label class="layui-btn upload-btn" for="save-upload">保存</label>
+                                    <input type="radio" name="is_script" value="1" id="save-upload" lay-ignore class="layui-hide">
+                                    <button class="layui-btn layui-hide" lay-submit lay-filter="kng-insert" id="insert">insert</button>
+                                </div>
                             </div>
                         </div>
                     </form>

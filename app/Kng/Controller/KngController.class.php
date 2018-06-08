@@ -10,14 +10,24 @@ use Kng\Controller\BaseController;
 
 class KngController extends BaseController {
         public function kng(){
+            $tab = $_GET ['kng_tab'];
+            if($tab == null){//没有获取到
+                $kng_tab = -1;
+            }else {
+                $kng_tab = (int)$tab;
+            }
+            $this -> kng_tab = $kng_tab;
+            $this -> msg_tab = -1;
             $this -> usr_name = $_SESSION ['usr_name'];
             $this -> new_msg_num = new_message_count ();
             $this -> getCate = get_cate();
+            $this -> nav_select = 1;
             $this->display();
         }
         public function kng_detail(){
             $this -> usr_name = $_SESSION ['usr_name'];
             $this -> new_msg_num = new_message_count ();
+            $this -> nav_select = 1;
             $id = $_SESSION ['usr_id'];
             $kng_id = $_GET ['kid'];
             if ($kng_id == null) return;
@@ -48,6 +58,9 @@ class KngController extends BaseController {
 			$page = $_GET ['page'];
             $limit = $_GET ['limit'];
 			$kng = M ('Kng');
+            $count = $kng
+                -> table ('ezsys_kng kng,ezsys_cate cate')
+                -> where ("kng_owner_id = $id and kng_flag = 0 and kng.kng_cate_id = cate.cate_id") -> count ();
 			$data = $kng
                 -> table ('ezsys_kng kng,ezsys_cate cate')
                 -> where ("kng_owner_id = $id and kng_flag = 0 and kng.kng_cate_id = cate.cate_id")
@@ -55,7 +68,6 @@ class KngController extends BaseController {
                 -> order ('kng_update_date desc')
                 -> limit ($page-1,$limit)
                 -> select ();
-            $count = count($data);
             $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
             print_r(json_encode($arr));
 		}
@@ -69,6 +81,9 @@ class KngController extends BaseController {
             $page = $_GET ['page'];
             $limit = $_GET ['limit'];
 			$kng = M ('Kng');
+            $count = $kng
+                -> table ('ezsys_kng kng,ezsys_cate cate')
+                -> where ("kng_owner_id=$usr_id and kng_flag = 1 and kng.kng_cate_id = cate.cate_id") -> count ();
             $data = $kng
                 -> table ('ezsys_kng kng,ezsys_cate cate')
                 -> where ("kng_owner_id=$usr_id and kng_flag = 1 and kng.kng_cate_id = cate.cate_id")
@@ -76,7 +91,6 @@ class KngController extends BaseController {
                 -> order ('kng_update_date desc')
                 -> limit ($page-1,$limit)
                 -> select ();
-            $count = count($data);
             $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
             print_r(json_encode($arr));
 		}

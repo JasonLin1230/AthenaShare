@@ -8,8 +8,17 @@ namespace Kng\Controller;
 use Think\Controller;
 class MessageController extends Controller{
     public function msg(){
+        $tab = $_GET ['msg_tab'];
+        if($tab == null){//没有获取到
+            $msg_tab = -1;
+        }else {
+            $msg_tab = (int)$tab;
+        }
+        $this -> msg_tab = $msg_tab;
+        $this -> kng_tab = -1;
         $this -> usr_name = $_SESSION ['usr_name'];
         $this -> new_msg_num = new_message_count ();
+        $this -> nav_select = 2;
         $this->display();
     }
 	/*
@@ -21,6 +30,9 @@ class MessageController extends Controller{
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
 		$msg = M ('msg');
+        $count = $msg
+            ->table('ezsys_usr usr,ezsys_msg msg')
+            ->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id") -> count ();
         $data = $msg
 			->table('ezsys_usr usr,ezsys_msg msg') 
 			->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id")
@@ -28,7 +40,6 @@ class MessageController extends Controller{
 			->order ('msg_update_date desc')
             ->limit ($page-1,$limit)
 			->select();
-        $count = count($data);
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));
 	}
@@ -43,6 +54,9 @@ class MessageController extends Controller{
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
         $msg = M ('msg');
+        $count = $msg
+            ->table('ezsys_usr usr,ezsys_msg msg')
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1") -> count ();
         $data = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
             ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1")
@@ -50,7 +64,6 @@ class MessageController extends Controller{
             ->order ('msg_update_date desc')
             ->limit ($page-1,$limit)
             ->select();
-        $count = count($data);
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));
 	}
@@ -66,6 +79,9 @@ class MessageController extends Controller{
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
         $msg = M ('msg');
+        $count = $msg
+            ->table('ezsys_usr usr,ezsys_msg msg')
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0") -> count ();
         $data = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
             ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0")
@@ -73,7 +89,6 @@ class MessageController extends Controller{
             ->order ('msg_update_date desc')
             ->limit ($page-1,$limit)
             ->select();
-        $count = count($data);
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));
 	}

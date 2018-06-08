@@ -16,10 +16,10 @@
         <li class="layui-nav-item">
             <a href="../Main/index.html">首页</a>
         </li>
-        <li class="layui-nav-item">
+        <li class="layui-nav-item <?php if($nav_select == 1): ?>layui-this<?php endif; ?>">
             <a href="../Kng/kng.html">知识分享</a>
         </li>
-        <li class="layui-nav-item">
+        <li class="layui-nav-item <?php if($nav_select == 2): ?>layui-this<?php endif; ?>">
             <a href="../Message/msg.html">消息中心</a>
         </li>
     </ul>
@@ -50,31 +50,31 @@
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="layui-icon layui-icon-read" href="javascript:;">&nbsp;&nbsp;知识分享</a>
                 <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../Kng/kng.html">我的发布</a>
+                    <dd class="<?php if($kng_tab == 0): ?>layui-this<?php endif; ?>">
+                        <a href="../Kng/kng.html?kng_tab=0">我的发布</a>
                     </dd>
-                    <dd>
-                        <a href="">我的草稿</a>
+                    <dd class="<?php if($kng_tab == 1): ?>layui-this<?php endif; ?>">
+                        <a href="../Kng/kng.html?kng_tab=1">我的草稿</a>
                     </dd>
-                    <dd>
-                        <a href="">编写最新</a>
+                    <dd class="<?php if($kng_tab == 2): ?>layui-this<?php endif; ?>">
+                        <a href="../Kng/kng.html?kng_tab=2">编写最新</a>
                     </dd>
                 </dl>
             </li>
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="layui-icon layui-icon-notice" href="javascript:;">&nbsp;&nbsp;消息中心</a>
                 <dl class="layui-nav-child">
-                    <dd>
-                        <a href="../Message/msg.html">已发消息</a>
+                    <dd class="<?php if($msg_tab == 0): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=0">已发消息</a>
                     </dd>
-                    <dd>
-                        <a href="">已读消息</a>
+                    <dd class="<?php if($msg_tab == 1): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=1">已读消息</a>
                     </dd>
-                    <dd>
-                        <a href="">未读消息</a>
+                    <dd class="<?php if($msg_tab == 2): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=2">未读消息</a>
                     </dd>
-                    <dd>
-                        <a href="">新建消息</a>
+                    <dd class="<?php if($msg_tab == 3): ?>layui-this<?php endif; ?>">
+                        <a href="../Message/msg.html?msg_tab=3">新建消息</a>
                     </dd>
                 </dl>
             </li>
@@ -83,26 +83,47 @@
 </div>
     <div class="layui-body content-main" style="padding: 15px;">
         <!-- 内容主体区域 -->
-        <div class="layui-fluid">
-            <h2 class="kng_title"><?php echo ($title); ?></h2>
-            <ul class="min-font">
-                <li>类别：<span><?php echo ($type); ?></span></li>
-                <li>时间：<span><?php echo ($date); ?></span></li>
-                <li>作者：<span><?php echo ($author); ?></span></li>
-                <li>获赞：<span class="like"><?php echo ($like); ?></span></li>
-            </ul>
-            <div style="text-align: right;">
-                <button type="button" class="layui-btn like-btn" data-kid="<?php echo ($kid); ?>">
-                    <i class="layui-icon">&#xe6c6;</i>点赞
-                </button>
-                <?php if($file != '0'): ?><a type="button" class="layui-btn" href="<?php echo ($file); ?>">
-                    <i class="layui-icon">&#xe857;</i>下载文件
-                </a><?php endif; ?>
+        <form class="layui-form" action="" lay-filter="info">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="account" required readonly lay-verify="required" autocomplete="off" class="layui-input" value="<?php echo ($info['account']); ?>">
+                </div>
+                <div class="layui-form-mid layui-word-aux">用户名用于登录，无法更改</div>
             </div>
-            <div class="kng_content">
-                <?php echo ($content); ?>
+            <div class="layui-form-item">
+                <label class="layui-form-label">昵称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" required lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                </div>
             </div>
-        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别</label>
+                <div class="layui-input-block">
+                    <!--<input type="radio" name="gender" value="0" title="男" checked="<?php echo ($info['gender'] = 0 ? checked : false); ?>">-->
+                    <!--<input type="radio" name="gender" value="1" title="女" checked="<?php echo ($info['gender'] = 1 ? checked : false); ?>">-->
+                    <input type="radio" name="gender" value="0" title="男">
+                    <input type="radio" name="gender" value="1" title="女">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" required lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="info-btn">立即提交</button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="layui-footer">
     <!-- 底部固定区域 -->
@@ -138,8 +159,9 @@
     </div>
 </script>
     <script src="/AthenaShare/src/Public/layui/layui.js"></script>
+    <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
     <script src="/AthenaShare/src/Public/js/index.js"></script>
-    <script src="/AthenaShare/src/Public/js/kng.js"></script>
+    <script src="/AthenaShare/src/Public/js/info.js"></script>
 </div>
 </body>
 </html>

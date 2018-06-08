@@ -83,91 +83,58 @@
 </div>
     <div class="layui-body content-main" style="padding: 15px;">
         <!-- 内容主体区域 -->
-        <div class="layui-tab layui-tab-card" lay-filter="kng-tab">
+        <div class="layui-tab layui-tab-card" lay-filter="msg-tab">
             <ul class="layui-tab-title">
-                <li class="<?php if(($kng_tab == -1) OR ($kng_tab == 0)): ?>layui-this<?php endif; ?>">我的发布</li>
-                <li class="<?php if($kng_tab == 1): ?>layui-this<?php endif; ?>">我的草稿</li>
-                <li class="<?php if($kng_tab == 2): ?>layui-this<?php endif; ?>">编写最新</li>
+                <li class="<?php if(($msg_tab == -1) OR ($msg_tab == 0)): ?>layui-this<?php endif; ?>">已发消息</li>
+                <li class="<?php if($msg_tab == 1): ?>layui-this<?php endif; ?>">已读消息</li>
+                <li class="<?php if($msg_tab == 2): ?>layui-this<?php endif; ?>">未读消息</li>
+                <li class="<?php if($msg_tab == 3): ?>layui-this<?php endif; ?>">新建消息</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item <?php if(($kng_tab == -1) OR ($kng_tab == 0)): ?>layui-show<?php endif; ?>">
+                <div class="layui-tab-item <?php if(($msg_tab == -1) OR ($msg_tab == 0)): ?>layui-show<?php endif; ?>">
                     <div class="table-wrap">
-                        <table id="my_share" lay-filter="my_share"></table>
-                        <script type="text/html" id="operation-bar-share">
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+                        <table id="sent_msg" lay-filter="sent_msg"></table>
+                        <script type="text/html" id="operation-bar-msg">
                             <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                         </script>
                     </div>
                 </div>
-                <div class="layui-tab-item <?php if($kng_tab == 1): ?>layui-show<?php endif; ?>">
+                <div class="layui-tab-item <?php if($msg_tab == 1): ?>layui-show<?php endif; ?>">
                     <div class="table-wrap">
-                        <table id="draft" lay-filter="draft"></table>
-                        <script type="text/html" id="operation-bar-draft">
-                            <a class="layui-btn layui-btn-xs" lay-event="release">发布</a>
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
+                        <table id="read_msg" lay-filter="read_msg"></table>
+                    </div>
+                </div>
+                <div class="layui-tab-item <?php if($msg_tab == 2): ?>layui-show<?php endif; ?>">
+                    <div class="table-wrap">
+                        <table id="unread_msg" lay-filter="unread_msg"></table>
+                        <script type="text/html" id="operation-bar-unmsg">
+                            <a class="layui-btn layui-btn-xs" lay-event="read">设为已读</a>
                             <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
                         </script>
                     </div>
                 </div>
-                <div class="layui-tab-item <?php if($kng_tab == 2): ?>layui-show<?php endif; ?>">
-                    <form class="layui-form " action="" enctype="multipart/form-data" lay-filter="new-kng" id="new-kng">
+                <div class="layui-tab-item <?php if($msg_tab == 3): ?>layui-show<?php endif; ?>">
+                    <form class="layui-form " action="">
                         <div class="layui-row">
                             <div class="layui-col-sm6">
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">标题</label>
+                                    <label class="layui-form-label">接收者</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="kng_title" lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-sm6">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">类别</label>
-                                    <div class="layui-input-block">
-                                        <select name="kng_cate" lay-verify="required">
-                                            <option value=""></option>
-                                            <?php if(is_array($getCate)): foreach($getCate as $key=>$vo): ?><option value=<?php echo ($vo["id"]); ?>><?php echo ($vo["name"]); ?></option><?php endforeach; endif; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-col-sm6">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">文件(可选)</label>
-                                    <button type="button" class="layui-btn" id="upsrc">
-                                        <i class="layui-icon">&#xe67c;</i>上传资源
-                                    </button>
-                                    <small><i>请将所有文件生成压缩包后上传</i></small>
-                                </div>
-                            </div>
-                            <div class="layui-col-sm6">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">是否分享</label>
-                                    <div class="layui-input-block">
-                                        <input type="radio" name="kng_sharing" value="1" title="与他人分享" checked>
-                                        <input type="radio" name="kng_sharing" value="0" title="私人收藏">
+                                        <input type="text" name="reciver" placeholder="收信人用户名" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <textarea id="textfield" name="kng_desc" cols="79" rows="10"></textarea>
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">消息内容</label>
+                            <div class="layui-input-block">
+                                <textarea name="describe" placeholder="请输入内容" class="layui-textarea"></textarea>
+                            </div>
                         </div>
-                        <input type="text" name="file_name" class="layui-hide">
-                        <input type="text" name="file_path" class="layui-hide">
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <div class="nofile">
-                                    <button class="layui-btn" lay-submit lay-filter="kng-release">发布</button>
-                                    <button class="layui-btn" lay-submit lay-filter="kng-save">保存</button>
-                                </div>
-                                <div class="hasfile layui-hide">
-                                    <label class="layui-btn upload-btn" for="release-upload">发布</label>
-                                    <input type="radio" name="is_script" value="0" id="release-upload" lay-ignore class="layui-hide">
-                                    <label class="layui-btn upload-btn" for="save-upload">保存</label>
-                                    <input type="radio" name="is_script" value="1" id="save-upload" lay-ignore class="layui-hide">
-                                    <button class="layui-btn layui-hide" lay-submit lay-filter="kng-insert" id="insert">insert</button>
-                                </div>
+                                <button class="layui-btn" lay-submit lay-filter="msg-btn">发送</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                             </div>
                         </div>
                     </form>
@@ -210,11 +177,8 @@
 </script>
     <script src="/AthenaShare/src/Public/layui/layui.js"></script>
     <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace ('textfield');
-    </script>
     <script src="/AthenaShare/src/Public/js/index.js"></script>
-    <script src="/AthenaShare/src/Public/js/kng.js"></script>
+    <script src="/AthenaShare/src/Public/js/msg.js"></script>
 </div>
 </body>
 </html>
