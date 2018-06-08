@@ -28,12 +28,14 @@ class KngController extends BaseController {
             $this -> usr_name = $_SESSION ['usr_name'];
             $this -> new_msg_num = new_message_count ();
             $this -> nav_select = 1;
-            $id = $_SESSION ['usr_id'];
+            $this -> kng_tab = -1;
+            $this -> msg_tab = -1;
+//            $id = $_SESSION ['usr_id'];
             $kng_id = $_GET ['kid'];
             if ($kng_id == null) return;
             $data = M ('Kng')
                 -> table ('ezsys_kng kng,ezsys_cate cate,ezsys_usr usr')
-                -> where ("kng_id=$kng_id and kng_owner_id=$id and kng.kng_cate_id = cate.cate_id and kng.kng_owner_id = usr.usr_id")
+                -> where ("kng_id=$kng_id and kng.kng_cate_id = cate.cate_id and kng.kng_owner_id = usr.usr_id")
                 -> find ();
             $this -> kid = $kng_id;
             $this -> title = $data ['kng_name'];
@@ -66,7 +68,7 @@ class KngController extends BaseController {
                 -> where ("kng_owner_id = $id and kng_flag = 0 and kng.kng_cate_id = cate.cate_id")
                 -> field ('kng.kng_id kid,kng.kng_update_date dt,kng.kng_name name,kng.kng_describe dscr,kng.kng_like lk,kng.kng_cate_id ctid,cate.cate_name ctnm,kng.kng_file_name file_name')
                 -> order ('kng_update_date desc')
-                -> limit ($page-1,$limit)
+                -> limit (($page-1)*$limit,$limit)
                 -> select ();
             $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
             print_r(json_encode($arr));
@@ -89,7 +91,7 @@ class KngController extends BaseController {
                 -> where ("kng_owner_id=$usr_id and kng_flag = 1 and kng.kng_cate_id = cate.cate_id")
                 -> field ('kng.kng_id kid,kng.kng_update_date dt,kng.kng_name name,kng.kng_describe dscr,kng.kng_like lk,kng.kng_cate_id ctid,cate.cate_name ctnm,kng.kng_file_name file_name')
                 -> order ('kng_update_date desc')
-                -> limit ($page-1,$limit)
+                -> limit (($page-1)*$limit,$limit)
                 -> select ();
             $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
             print_r(json_encode($arr));

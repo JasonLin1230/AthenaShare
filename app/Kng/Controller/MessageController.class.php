@@ -38,7 +38,7 @@ class MessageController extends Controller{
 			->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id")
 			->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
 			->order ('msg_update_date desc')
-            ->limit ($page-1,$limit)
+            ->limit (($page-1)*$limit,$limit)
 			->select();
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));
@@ -62,7 +62,7 @@ class MessageController extends Controller{
             ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1")
             ->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
             ->order ('msg_update_date desc')
-            ->limit ($page-1,$limit)
+            ->limit (($page-1)*$limit,$limit)
             ->select();
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));
@@ -87,7 +87,7 @@ class MessageController extends Controller{
             ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0")
             ->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
             ->order ('msg_update_date desc')
-            ->limit ($page-1,$limit)
+            ->limit (($page-1)*$limit,$limit)
             ->select();
         $arr = array('code' => 0,'msg'=>'','count' => $count,'data' => $data);
         print_r(json_encode($arr));

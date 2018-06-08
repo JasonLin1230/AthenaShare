@@ -85,15 +85,10 @@
 			<!-- 内容主体区域 -->
             <div class="slogan">
                 <h1>Sharing your knowledge and resources.</h1>
-                <h1>Communicating with your friends.</h1><br>
-                <h1 class="italic">From now on.Just do it.</h1>
+                <h1>Communicating with your friends.</h1><hr>
             </div>
-            <div class="table-wrap">
-                <table id="latest_share" lay-filter="latest_share"></table>
-                <script type="text/html" id="operation-bar-share">
-                    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">详情</a>
-                </script>
-            </div>
+			<ul class="kng_last"></ul>
+			<div id="page" style="text-align: center;"></div>
 		</div>
 		<div class="layui-footer">
     <!-- 底部固定区域 -->
@@ -130,6 +125,7 @@
 </script>
 	</div>
 	<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+	<script src="/AthenaShare/src/Public/js/base.js"></script>
 	<script src="/AthenaShare/src/Public/js/index.js"></script>
 	</body>
 </html>

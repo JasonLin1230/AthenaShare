@@ -177,7 +177,7 @@
 </script>
     <script src="/AthenaShare/src/Public/layui/layui.js"></script>
     <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
-    <script src="/AthenaShare/src/Public/js/index.js"></script>
+    <script src="/AthenaShare/src/Public/js/base.js"></script>
     <script src="/AthenaShare/src/Public/js/msg.js"></script>
 </div>
 </body>

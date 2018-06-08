@@ -1,121 +1,88 @@
-layui.use(['element', 'form','table', 'layer', 'jquery'], function () {
+layui.use(['element',  'layer', 'jquery','laypage'], function () {
     var element = layui.element
-        , form = layui.form
-        , table = layui.table
         , layer = layui.layer
-        , $ = layui.$
-        , pass_layer;
-    $("#password-btn").click(function () {    //修改密码按钮
-        pass_layer = layer.open({
-            type: 1,
-            title: '修改密码',
-            content: $('#passwordTp').html()
-        });
-    });
-    form.on('submit(password)', function (data) {
-        if (data.field.new_pass != data.field.confirm_pass) {
-            layer.msg('两次密码输入不同！', {icon: 5});
-            return false;
-        }else if(data.field.old_pass == data.field.new_pass){
-            layer.msg('新密码与原密码相同！', {icon: 5});
-            return false;
-        }else{
-            return beauty_ajax("../Base/ex_pass", data.field, function(){
-                layer.close(pass_layer);
-                setTimeout(function () {
-                    window.location.href="Login/index";
-                },1500);
-            });
-        }
-    });
-    table.render({
-        elem: '#latest_share'
-        , id: 'latest_share'
-        , height: 320
-        , url: 'get_latest' //数据接口
-        , cellMinWidth: 60
-        , cols: [[ //表头
-            { field: 'name', title: '标题'}
-            , { field: 'acc', title: '作者'}
-            , { field: 'ctnm', title: '类别'}
-            , { field: 'dscr', title: '内容'}
-            , { field: 'lk', title: '点赞数'}
-            , { field: 'dt', title: '发布日期', align:'right', sort: true }
-            , { align:'center', title: '操作', toolbar: '#operation-bar-share', fixed: 'right'}
-        ]]
-    });
-    table.render({
-        elem: '#private_src'
-        , id: 'private_src'
-        , height: 320
-        , url: 'personal_src_private' //数据接口
-        , cellMinWidth: 60
-        , page: true //开启分页
-        , cols: [[ //表头
-            { field: 'name', title: '标题'}
-            , { field: 'dscrib', title: '内容'}
-            , { field: 'times', title: '下载量'}
-            , { field: 'date', title: '时间', align:'right', sort: true }
-            , { align:'center', toolbar: '#operation-bar-src', fixed: 'right'}
-        ]]
-    });
-    table.render({
-        elem: '#share_src'
-        , id: 'share_src'
-        , height: 320
-        , url: 'personal_src_share' //数据接口
-        , cellMinWidth: 60
-        , page: true //开启分页
-        , cols: [[ //表头
-            { field: 'name', title: '标题'}
-            , { field: 'dscrib', title: '内容'}
-            , { field: 'times', title: '下载量'}
-            , { field: 'date', title: '时间', align:'right', sort: true }
-            , { align:'center', toolbar: '#operation-bar-src', fixed: 'right'}
-        ]]
-    });
-});
-(function() {
-    var OriginTitile = document.title, titleTime;
-    document.addEventListener('visibilitychange', function() {
-        if (document.hidden) {
-            document.title = '死鬼去哪里了！';
-            clearTimeout(titleTime);
-        } else {
-            document.title = '(つェ⊂)咦!又好了!';
-            titleTime = setTimeout(function() {
-                document.title = OriginTitile;
-            },2000);
-        }
-    });
-})();
-function beauty_ajax(url,data,success_func) {//ajax表单提交
-    var $ = layui.$
-        , layer = layui.layer;
-    var submitting = layer.msg('正在提交', {
-        icon: 16
-        , shade: 0.1
-        , time: 0
-    });
-    console.log(data);          //打印即将发送的数据
+        , laypage = layui.laypage
+        , $ = layui.$;
     $.ajax({
-        url: url,
-        type: "post",
-        data: data,
+        url: 'get_count',
+        type: "get",
         success: function (data) {
-            console.log(data);  //打印接受到的数据
             data = JSON.parse(data);
-            if (data.code === 0 || data.status === 1) {
-                layer.close(submitting);
-                layer.msg('提交成功', {
-                    icon: 1
-                    , shade: 0.1
-                    , time: 1000
-                })
-                if(success_func !== undefined){
-                    success_func();
+            if(data.code === 0){
+                var count=data.count;
+                data=data.data;
+                console.log(data);
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += "<li><h3><a href='../Kng/kng_detail.html?kid="+data[i].kid+"'>"+data[i].name+"</a></h3><div class='li_detail'>"
+                        +data[i].dscr
+                        + "</div><p class='layui-clear'><span class='layui-badge layui-bg-green'>"
+                        +data[i].ctnm
+                        +"</span><span style='float: right;'>"
+                        +data[i].dt
+                        +"</span></p></li>";
                 }
-            } else {
+                $('.kng_last').html(html);
+                // 配置分页
+                laypage.render({
+                    elem: 'page'
+                    ,limit: 5
+                    ,count: count
+                    ,jump: function(obj, first){
+                        if(!first){
+                            $.ajax({
+                                url: 'get_count',
+                                type: "get",
+                                data: {
+                                  'page' : obj.curr
+                                },
+                                success: function (data) {
+                                    data = JSON.parse(data);
+                                    if(data.code === 0){
+                                        data=data.data;
+                                        console.log(data);
+                                        var html = '';
+                                        for (var i = 0; i < data.length; i++) {
+                                            html += "<li><h3><a href='../Kng/kng_detail.html?kid="+data[i].kid+"'>"+data[i].name+"</a></h3><div class='li_detail'>"
+                                                +data[i].dscr
+                                                + "</div><p class='layui-clear'><span class='layui-badge layui-bg-green'>"
+                                                +data[i].ctnm
+                                                +"</span><span style='float: right;'>"
+                                                +data[i].dt
+                                                +"</span></p></li>";
+                                        }
+                                        $('.kng_last').html(html);
+                                    }else{
+                                        if(data.msg!=""){
+                                            layer.msg(data.msg, {
+                                                icon: 2
+                                                , shade: 0.1
+                                                , time: 2000
+                                            });
+                                        }else{
+                                            layer.msg('未知错误', {
+                                                icon: 2
+                                                , shade: 0.1
+                                                , time: 2000
+                                            });
+                                        }
+                                    }
+                                },
+                                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                    layer.msg(XMLHttpRequest.status + '信息获取失败', {
+                                        icon: 2
+                                        , shade: 0.1
+                                        , time: 2000
+                                    })
+                                },
+                                complete: function (XMLHttpRequest, textStatus) {
+                                    this;
+                                }
+                            });
+                        }
+                    }
+                });
+            }else{
                 if(data.msg!=""){
                     layer.msg(data.msg, {
                         icon: 2
@@ -132,7 +99,7 @@ function beauty_ajax(url,data,success_func) {//ajax表单提交
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            layer.msg(XMLHttpRequest.status + '提交失败', {
+            layer.msg(XMLHttpRequest.status + '信息获取失败', {
                 icon: 2
                 , shade: 0.1
                 , time: 2000
@@ -142,5 +109,4 @@ function beauty_ajax(url,data,success_func) {//ajax表单提交
             this;
         }
     });
-    return false;
-};
+});

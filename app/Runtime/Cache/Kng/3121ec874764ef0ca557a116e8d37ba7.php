@@ -213,7 +213,7 @@
     <script>
         CKEDITOR.replace ('textfield');
     </script>
-    <script src="/AthenaShare/src/Public/js/index.js"></script>
+    <script src="/AthenaShare/src/Public/js/base.js"></script>
     <script src="/AthenaShare/src/Public/js/kng.js"></script>
 </div>
 </body>
