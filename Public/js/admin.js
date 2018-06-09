@@ -82,23 +82,37 @@ layui.use(['element',  'layer', 'form', 'jquery','laypage', 'table'], function (
             , { align:'center', toolbar: '#operation-bar-del', fixed: 'right'}
         ]]
     });
-    table.on('tool', function(obj){
-        var data = obj.data;
+    table.on('tool(admin-usr)', function(obj){
         if(obj.event === 'delete'){
             layer.confirm('谨慎操作，删除后无法恢复！', function(index){
                 layer.close(index);
-                return beauty_ajax("del_kng",data,function () {
+                return beauty_ajax("del_usr",obj.data,function () {
+                    table.reload('admin-usr', {
+                        url: "usr"
+                    });
+                });
+            });
+        }
+    });
+    table.on('tool(admin-kng)', function(obj){
+        if(obj.event === 'delete'){
+            layer.confirm('谨慎操作，删除后无法恢复！', function(index){
+                layer.close(index);
+                return beauty_ajax("del_kng",obj.data,function () {
                     table.reload('admin-kng', {
                         url: "kng"
                     });
                 });
             });
-        } else if(obj.event === 'release'){
-            layer.confirm('确认发布么', function(index){
+        }
+    });
+    table.on('tool(admin-msg)', function(obj){
+        if(obj.event === 'delete'){
+            layer.confirm('谨慎操作，删除后无法恢复！', function(index){
                 layer.close(index);
-                return beauty_ajax("push_draft",data,function () {
-                    table.reload('draft', {
-                        url: "personal_kng_script"
+                return beauty_ajax("del_msg",obj.data,function () {
+                    table.reload('admin-msg', {
+                        url: "msg"
                     });
                 });
             });

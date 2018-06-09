@@ -20,7 +20,7 @@ class AdminController extends Controller {
        $result = M('admin')->where("admin_account='%s' AND admin_passcode='%s'",$usr,$pwd)->find();
        if($result){
             $_SESSION['admin_id'] = $result['admin_id'];
-			$this -> redirect ('Admin/index.html'); // ez 2016/5/23
+			$this -> redirect ('Admin/index');
        }else{
             $this->error('登陆失败');
        }
@@ -122,13 +122,13 @@ class AdminController extends Controller {
             $this -> redirect ('Admin/login');
         $kid = $_POST ['id'];
         $result = M("kng") -> where ("kng_id = $kid") -> find();
-        $file_path= $result['src_file_path'];
-        if($file_path != null){
+        $file_path= $result['kng_file_path'];
+        if($file_path){
             if(file_exists($file_path))
             {
                 if(unlink($file_path)){//删除文件
                     //数据库删除
-                    $result = M('src') -> where("kng_id = $kid") ->delete();
+                    $result = M('kng') -> where("kng_id = $kid") ->delete();
                     if($result){
                         $arr = array('code' => 0,'msg'=>'删除成功！');
                     }else{
@@ -138,14 +138,20 @@ class AdminController extends Controller {
                     $arr = array('code' => 1,'msg'=>'删除失败！');
                 }
             }else{
-                $arr = array('code' => 1,'msg'=>'文件已丢失！');
+                //文件已丢失
+                $result = M('kng') -> where("kng_id = $kid") ->delete();
+                if($result){
+                    $arr = array('code' => 0,'msg'=>'文件已丢失，记录删除成功！');
+                }else{
+                    $arr = array('code' => 1,'msg'=>'文件已丢失，记录删除失败！');
+                }
             }
         }else{
-            $result = M('src') -> where("kng_id = $kid") ->delete();
+            $result = M('kng') -> where("kng_id = $kid") ->delete();
             if($result){
-                $arr = array('code' => 0,'msg'=>'删除成功！');
+                $arr = array('code' => 0,'msg'=>'没有文件，删除成功！');
             }else{
-                $arr = array('code' => 1,'msg'=>'删除失败！');
+                $arr = array('code' => 1,'msg'=>'没有文件，删除失败！');
             }
         }
         print_r(json_encode($arr));
@@ -176,20 +182,28 @@ class AdminController extends Controller {
     public function msg(){
         if (($admin_id = $this -> admin_check_login ()) < 0)
             $this -> redirect ('Admin/login');
-        $msg_count = M('msg')->count();
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
-        $sql = "SELECT `usr_account` FROM `ezsys_usr` WHERE `usr_id` in (select `msg_sender_id` FROM `ezsys_msg`)";
+        $msg_count = M('msg')->count();
+//        取消息和发送者
         $msg_data = M("msg as m")
             ->field('m.msg_id mid,m.msg_describe descr,u.usr_account sender,m.msg_update_date date')
-//            ->field('m.msg_id,m.msg_describe,u.usr_account,m.msg_update_date')
-            ->field('p.*,t.* , (select usr_account from ezsys_usr where c.customer_id in (select cid from 5kcrm_cprelation cp where cp.pid = product_id group by pid) ) customer_names ')
-            ->join('ezsys_usr as u on m.msg_sender_id = u.usr_id','inner')
-//            ->join('ezsys_usr as u on m.msg_rcver_id = u.usr_id','left')
-            ->where('')
+            ->join('ezsys_usr as u on m.msg_sender_id = u.usr_id','left')
             ->limit(($page-1)*$limit,$limit)
             ->order('msg_update_date desc')
             ->select();
+        //取接收者
+        $data = M("usr as usr")
+            ->field('usr.usr_account rcver')
+            ->join('ezsys_msg msg on msg.msg_rcver_id = usr.usr_id','left')
+            ->limit(($page-1)*$limit,$limit)
+            ->order('msg_update_date desc')
+            ->select();
+        for($i=0;$i<$msg_count;$i++)
+        {
+            $msg_data[$i]['rcver'] = $data[$i]['rcver'];
+        }
+//        $sql = "SELECT `usr_account` FROM `ezsys_usr` WHERE `usr_id` in (select `msg_sender_id` FROM `ezsys_msg`)";
         $arr = array('code' => 0,'msg'=>'','count' => $msg_count,'data' => $msg_data);
         print_r(json_encode($arr));
     }
