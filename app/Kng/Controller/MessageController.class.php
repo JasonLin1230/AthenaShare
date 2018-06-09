@@ -114,10 +114,10 @@ class MessageController extends BaseController{
 
 
 	/*
-	 * Author : zzk  2016/5/11
-	 * Describe : 个人消息发送 ：用户 TO 用户。
+	 * Author : JasonLin  2018/6/1
+	 * Describe : 消息发送
 	*/
-	public function msg_send_utou(){    //cate : 2 （用户）
+	public function msg_send_utou(){
 		$usr_id = $_SESSION ['usr_id'];
         $reciver = $_POST ['reciver'];
         $describe = $_POST ['describe'];
@@ -141,92 +141,6 @@ class MessageController extends BaseController{
                 $arr = array('code' => 1,'msg'=>'发送失败');
         }
         print_r(json_encode($arr));
-	}
-
-
-
-	/*
-	 * Author : zzk  2016/5/11
-	 * Describe : 个人消息发送 ：用户 TO 管理员。
-	*/
-	public function msg_send_utoa(){    //cate : 1 （管理员）
-		if(check_login()<0){ $this -> redirect('Login/index'); }
-		$usr_id = $_SESSION ['usr_id'];
-		$describe = I('post.describe');
-
-		//发送邮件
-		$msg = M('msg');
-		$new_data['msg_sender_id'] = $usr_id;
-		$new_data['msg_sender_cate'] = 2;
-		//$new_data['msg_rcver_id'] = '';
-		$new_data['msg_rcver_cate'] = 1;
-		$new_data['msg_describe'] = $describe;
-		$result = $msg -> add($new_data);
-		if($result == false){
-			$rtn = -1;
-		}else {
-			$rtn = 1;
-		}
-		$this -> ajaxReturn ($rtn);
-	}
-
-
-	/*
-	 * Author : zzk  2016/5/11
-	 * Describe : 个人消息发送 ：管理员 TO 用户。
-	*/
-	public function msg_send_atou(){
-		//if(check_login()<0){ $this -> redirect('Login/index'); }
-		//$usr_id = $_SESSION ['usr_id'];
-		$reciver = I('post.reciver');//获得接受者用户名
-		$describe = I('post.describe');
-
-		//根据用户输入的接受者用户名查询数据库
-		$rcver_usr = M('usr') -> where("usr_account = '$reciver'") -> field('usr_id') -> find();
-		//发送邮件
-		if($rcver_usr == null){
-			$this -> ajaxReturn(-1);
-		}
-		$msg = M('msg');
-		//$new_data['msg_sender_id'] = $usr_id;
-		$new_data['msg_sender_cate'] = 1;
-		$new_data['msg_rcver_id'] = $rcver_usr['usr_id'];
-		$new_data['msg_rcver_cate'] = 2;
-		$new_data['msg_describe'] = $describe;
-		$result = $msg -> add($new_data);
-		if($result == false){
-			$rtn = -1;
-		}else {
-			$rtn = 1;
-		}
-		$this -> ajaxReturn ($rtn);
-	}
-
-
-
-	/*
-	 * Author : zzk  2016/5/11
-	 * Describe : 消息发送 ：系统（所有人可收到）。
-	*/
-	public function msg_send_sys(){
-		//if(check_login()<0){ $this -> redirect('Login/index'); }
-		//$usr_id = $_SESSION ['usr_id'];
-
-		$describe = I('post.describe');
-		//发送邮件
-		$msg = M('msg');
-		$new_data['msg_sender_id'] = 0;
-		$new_data['msg_sender_cate'] = 0;
-		$new_data['msg_rcver_id'] = 0;
-		$new_data['msg_rcver_cate'] = 0;
-		$new_data['msg_describe'] = $describe;
-		$result = $msg -> add($new_data);
-		if($result == false){
-			$rtn = -1;
-		}else {
-			$rtn = 1;
-		}
-		$this -> ajaxReturn ($rtn);
 	}
 
 	/*

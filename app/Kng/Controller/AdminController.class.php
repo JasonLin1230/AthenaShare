@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Author : zzk
+ * Author : JasonLin
  * Describe : admin.
  * Date : 2016/5/31
  */
@@ -39,7 +39,7 @@ class AdminController extends Controller {
     //管理员退出
     public function logout(){
         session(null);
-		$this -> redirect ('Admin/login'); // ez 2016/5/13
+		$this -> redirect ('Admin/login'); // JasonLin 2018/5/213
     }
 
     //管理员个人中心页

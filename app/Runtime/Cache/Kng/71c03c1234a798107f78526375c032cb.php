@@ -137,9 +137,9 @@
         </form>
     </div>
 </script>
-    <script src="/AthenaShare/src/Public/layui/layui.js"></script>
-    <script src="/AthenaShare/src/Public/js/base.js"></script>
-    <script src="/AthenaShare/src/Public/js/kng.js"></script>
 </div>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/kng.js"></script>
 </body>
 </html>

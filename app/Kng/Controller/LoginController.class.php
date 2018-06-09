@@ -26,7 +26,7 @@ class LoginController extends Controller {
     }
     public  function logout(){
         session(null);
-		$this -> redirect ('Login/index'); // ez 2016/5/13
+		$this -> redirect ('Login/index'); // JasonLin 2018/6/3
     }
     public function send_email() {
         $account = $_POST['usr_account'];

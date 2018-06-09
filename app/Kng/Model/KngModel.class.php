@@ -1,7 +1,7 @@
 <?php
 /*
- * Author : ez
- * Date : 2016/5/4
+ * Author : JaosnLin
+ * Date : 2018/6/24
  * Describe : Kownledge Model class. 
  *       
 */

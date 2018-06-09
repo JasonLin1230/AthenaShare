@@ -1,7 +1,7 @@
 <?php
 
         /*
-         * Author : zzk
+         * Author : JasonLin
          * Describe : 获取所有分类名称
          */
         function get_cate () {
@@ -11,7 +11,7 @@
 
 
         /*
-         * Author : zzk
+         * Author : JasonLin
          * Describe : 获取所有分类名称
          */
         function new_message_count () {
@@ -23,11 +23,11 @@
 
 
         /*
-         * Author : zzk
+         * Author : JasonLin
          * Describe : 检查是否登录
          */
         function check_login () {
-            //session_start ();       //zzk 2016/5/6 系统默认开启，如果不希望系统自动启动session的话，可以设置'SESSION_AUTO_START' =>false
+            //session_start ();       //JasonLin 2016/5/6 系统默认开启，如果不希望系统自动启动session的话，可以设置'SESSION_AUTO_START' =>false
             $usr_id = $_SESSION ['usr_id'];
             if (isset ($usr_id)) {
                 return $usr_id;
@@ -39,7 +39,7 @@
 
 
 	/*
-	 * Author : zzk
+	 * Author : JasonLin
 	 * Describe : 系统邮件发送函数
      * @param string $to    接收邮件者邮箱
      * @param string $name  接收邮件者名称
@@ -81,7 +81,7 @@
 
 
     /*
-     * Author : zzk
+     * Author : JasonLin
      * Describe : 生成验证码
      */
     function GetRandStr($len) 
@@ -106,7 +106,7 @@
 
 
     /*
-     * Author : zzk
+     * Author : JasonLin
      * Describe : 生成随机数字数组
      */
     function GetRandNum($len) 
