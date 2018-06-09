@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>AthenaShare</title>
-    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css">
-    <link rel="stylesheet" href="__PUBLIC__/css/admin.css">
+    <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
+    <link rel="stylesheet" href="/AthenaShare/src/Public/css/admin.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -19,10 +19,10 @@
                 <li class="layui-nav-item">
                     <a href="admin_usr.html" class="layui-icon layui-icon-user">&nbsp;&nbsp;用户管理</a>
                 </li>
-                <li class="layui-nav-item layui-this">
+                <li class="layui-nav-item">
                     <a href="admin_kng.html" class="layui-icon layui-icon-read">&nbsp;&nbsp;知识管理</a>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-this">
                     <a href="admin_msg.html" class="layui-icon layui-icon-notice">&nbsp;&nbsp;消息管理</a>
                 </li>
             </ul>
@@ -30,10 +30,7 @@
     </div>
     <div class="layui-body content-main" style="padding: 15px;top: 0;">
         <!-- 内容主体区域 -->
-        <div class="btn-wrap" style="text-align: right;">
-            <button class="layui-btn new-cate-btn">新增分类</button>
-        </div>
-        <table id="admin-kng" lay-filter="admin-kng"></table>
+        <table id="admin-msg" lay-filter="admin-msg"></table>
         <script type="text/html" id="operation-bar-del">
             <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
         </script>
@@ -60,8 +57,8 @@
         </form>
     </div>
 </script>
-<script src="__PUBLIC__/layui/layui.js"></script>
-<script src="__PUBLIC__/js/base.js"></script>
-<script src="__PUBLIC__/js/admin.js"></script>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/admin.js"></script>
 </body>
 </html>

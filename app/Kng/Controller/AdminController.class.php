@@ -76,11 +76,11 @@ class AdminController extends Controller {
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
         $usr_data = M("usr as usr")
-        ->field('usr.usr_id uid,usr.usr_account name,usr.usr_real_name real_name,usr.usr_phone_num phone,usr.usr_email email,count(kng.kng_id) personal_kng_count')
-        ->join('ezsys_kng kng on kng.kng_owner_id = usr.usr_id','left')
-        ->limit(($page-1)*$limit,$limit)
-        ->group('name')
-        ->select();
+            ->field('usr.usr_id uid,usr.usr_account name,usr.usr_real_name real_name,usr.usr_phone_num phone,usr.usr_email email,count(kng.kng_id) personal_kng_count')
+            ->join('ezsys_kng kng on kng.kng_owner_id = usr.usr_id','left')
+            ->limit(($page-1)*$limit,$limit)
+            ->group('name')
+            ->select();
         $arr = array('code' => 0,'msg'=>'','count' => $usr_count,'data' => $usr_data);
         print_r(json_encode($arr));
     }
@@ -99,163 +99,111 @@ class AdminController extends Controller {
     }
 
     //知识管理
-    public function admin_kng(){
-    if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
-        $cateId = I('get.cateId');
-        $keys = I('get.keywords');
-
-        if($cateId == NULL){$cateId=-1;}
-        //分类
-        $data = M('cate') -> field('cate_id id,cate_name name') -> select ();
-        $this -> assign('cate',$data);//所有类别
-
-        $this -> assign('selectCate',$cateId);//将选择的类别回传给页面
-        $this -> assign('keys',$keys);//将关键字回传给页面
-
-        //分页
-        if($cateId!=-1){
-            $map="kng_cate_id='$cateId' and kng_name like '%$keys%'";
-        }else{
-            $map="kng_name like '%$keys%'";
-        }
-
-        $kng_count = M('kng')->where($map)->count();  //用户总数
-        $page = new \Think\Page($kng_count,8); 
-            //分页跳转的时候保证查询条件
-            foreach($map as $key=>$val) {
-                $Page->parameter[$key] = urlencode($val);
-            }
-        $show = $page->show();
-        $this->assign('page',$show);
-
-        //取知识项数据
-        if($cateId==-1){//获得全部数据
-            //数据
-            $kng_data = M("kng as k")
-            ->field('k.kng_id id,k.kng_name name,c.cate_name cate,u.usr_account owner,k.kng_update_date date,k.kng_like hot')
+    public function kng(){
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
+        $kng_count = M('kng')->count();
+        $page = $_GET ['page'];
+        $limit = $_GET ['limit'];
+        $kng_data = M("kng as k")
+            ->field('k.kng_id id,k.kng_name name,c.cate_name cate,u.usr_account owner,k.kng_update_date date,k.kng_file_name file_name,k.kng_like hot')
             ->join('ezsys_cate as c on k.kng_cate_id = c.cate_id','left')
             ->join('ezsys_usr as u on k.kng_owner_id = u.usr_id','left')
-            ->where("k.kng_name like '%$keys%'")
-            ->limit($page->firstRow.','.$page->listRows)
+            ->limit(($page-1)*$limit,$limit)
             ->order ('kng_update_date desc')
             ->select();
-        }else{      //根据分类取知识
-            //数据
-            $kng_data = M("kng as k")
-            ->field('k.kng_id id,k.kng_name name,c.cate_name cate,u.usr_account owner,k.kng_update_date date,k.kng_like hot')
-            ->join('ezsys_cate as c on k.kng_cate_id = c.cate_id','left')
-            ->join('ezsys_usr as u on k.kng_owner_id = u.usr_id','left')
-            ->where("k.kng_cate_id='$cateId' and k.kng_name like '%$keys%'")
-            ->limit($page->firstRow.','.$page->listRows)
-            ->order ('kng_update_date desc')
-            ->select();
-        }
-        
-        $this->assign('kng_data',$kng_data);
-        $this->display();
+        $arr = array('code' => 0,'msg'=>'','count' => $kng_count,'data' => $kng_data);
+        print_r(json_encode($arr));
     }
 
-    
+    //知识删除
+    public function del_kng(){
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
+        $kid = $_POST ['id'];
+        $result = M("kng") -> where ("kng_id = $kid") -> find();
+        $file_path= $result['src_file_path'];
+        if($file_path != null){
+            if(file_exists($file_path))
+            {
+                if(unlink($file_path)){//删除文件
+                    //数据库删除
+                    $result = M('src') -> where("kng_id = $kid") ->delete();
+                    if($result){
+                        $arr = array('code' => 0,'msg'=>'删除成功！');
+                    }else{
+                        $arr = array('code' => 1,'msg'=>'文件已删除，记录删除失败！');
+                    }
+                }else{
+                    $arr = array('code' => 1,'msg'=>'删除失败！');
+                }
+            }else{
+                $arr = array('code' => 1,'msg'=>'文件已丢失！');
+            }
+        }else{
+            $result = M('src') -> where("kng_id = $kid") ->delete();
+            if($result){
+                $arr = array('code' => 0,'msg'=>'删除成功！');
+            }else{
+                $arr = array('code' => 1,'msg'=>'删除失败！');
+            }
+        }
+        print_r(json_encode($arr));
+    }
 
     //新增分类
     public function add_cate(){
-    if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
-
-        $new_data['cate_name'] = I('post.cateName');
-
-        $result = M("cate") -> add($new_data);
-        if($result != false){
-          $this->success('添加成功！');
-        }else{
-          $this->error('添加失败！');
-        }
-    }
-
-    //删除知识项
-    public function delete_kng()
-    {
         if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
+            $this -> redirect ('Admin/login');
 
-        $arrId = I('post.id');
-        foreach($arrId as $key => $value){
-            $sql = $sql."$value,";
-        }
-        $sql = substr($sql,0,-1);//删除最后的“,”
-        //数据库删除
-        $result = M('kng') -> where("kng_id in (".$sql.")") ->delete();
-        if($result){
-            $this->success('删除成功！');
+        $catename = $_POST ['catename'];
+        $find = M("cate") ->where("cate_name = '$catename'") ->find();
+        if($find){
+            $arr = array('code' => 1,'msg'=>'该类别已存在！');
         }else{
-            $this->error('删除失败！');
-        }
-    }
-
-
-    //资源管理
-    public function admin_src(){
-    if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
-
-        $keys = I('get.keywords');
-        $this -> assign('keys',$keys);//将关键字回传给页面
-        //分页
-        $map="src_name like '%$keys%'";
-        $src_count = M('src')->where($map)->count();  //用户总数
-        $page = new \Think\Page($src_count,8); 
-            //分页跳转的时候保证查询条件
-            foreach($map as $key=>$val) {
-                $Page->parameter[$key] = urlencode($val);
-            }
-        $show = $page->show();
-        $this->assign('page',$show);
-
-        //取资源数据
-        $src_data = M("src as s")
-        ->field('s.src_id id,s.src_name name,u.usr_account owner,s.src_update_date date,s.src_down_times down')
-        ->join('ezsys_usr as u on s.src_owner_id = u.usr_id','left')
-        ->where("s.src_name like '%$keys%'")
-        ->limit($page->firstRow.','.$page->listRows)
-        ->order ('src_update_date desc')
-        ->select();
-        
-        $this->assign('src_data',$src_data);
-        $this->display();
-    }
-
-
-    //删除资源
-    public function delete_src()
-    {
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
-
-        $arrId = I('post.id');
-        foreach($arrId as $key => $value){
-            $sql = $sql."$value,";
-        }
-        $sql = substr($sql,0,-1);//删除最后的“,”
-        //本地删除
-        $file = $src -> where ("src_id=$src_id") -> find();
-        $file_path= $file['src_file_path'];
-        //echo "<script>alert('$file_path');</script>";
-        if(file_exists($file_path))
-        {
-            if(unlink($file_path)){//删除文件
-                //数据库删除
-                $result = M('src') -> where("src_id in (".$sql.")") ->delete();
-                if($result){
-                    $this->success('删除成功！');
-                }else{
-                    $this->error('删除失败！');
-                }
+            $new_data['cate_name'] = $catename;
+            $result = M("cate") -> add($new_data);
+            if($result){
+                $arr = array('code' => 0,'msg'=>'删除成功！');
             }else{
-                $this->error("删除文件失败！");
+                $arr = array('code' => 1,'msg'=>'删除失败！');
             }
-        }else{
-            $this->error("本地文件丢失！");
         }
+    print_r(json_encode($arr));
+    }
+
+    //消息管理
+    public function msg(){
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
+        $msg_count = M('msg')->count();
+        $page = $_GET ['page'];
+        $limit = $_GET ['limit'];
+        $sql = "SELECT `usr_account` FROM `ezsys_usr` WHERE `usr_id` in (select `msg_sender_id` FROM `ezsys_msg`)";
+        $msg_data = M("msg as m")
+            ->field('m.msg_id mid,m.msg_describe descr,u.usr_account sender,m.msg_update_date date')
+//            ->field('m.msg_id,m.msg_describe,u.usr_account,m.msg_update_date')
+            ->field('p.*,t.* , (select usr_account from ezsys_usr where c.customer_id in (select cid from 5kcrm_cprelation cp where cp.pid = product_id group by pid) ) customer_names ')
+            ->join('ezsys_usr as u on m.msg_sender_id = u.usr_id','inner')
+//            ->join('ezsys_usr as u on m.msg_rcver_id = u.usr_id','left')
+            ->where('')
+            ->limit(($page-1)*$limit,$limit)
+            ->order('msg_update_date desc')
+            ->select();
+        $arr = array('code' => 0,'msg'=>'','count' => $msg_count,'data' => $msg_data);
+        print_r(json_encode($arr));
+    }
+
+    //消息删除
+    public function del_msg(){
+        if (($admin_id = $this -> admin_check_login ()) < 0)
+            $this -> redirect ('Admin/login');
+        $mid = $_POST ['mid'];
+        $result = M("msg") -> where ("msg_id = $mid") -> delete ();
+        if ($result > 0)
+            $arr = array('code' => 0,'msg'=>'删除成功');
+        else
+            $arr = array('code' => 1,'msg'=>'删除失败');
+        print_r(json_encode($arr));
     }
 }
