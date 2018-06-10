@@ -40,7 +40,7 @@ class KngController extends BaseController {
             $this -> title = $data ['kng_name'];
             $this -> type = $data ['cate_name'];
             $this -> date = $data ['kng_update_date'];
-            $this -> author = $data ['usr_real_name'];
+            $this -> author = $data ['usr_account'];
             $this -> like = $data ['kng_like'];
             if($data ['kng_file_path']){
                 $this -> file = "../../" . $data ['kng_file_path'];
@@ -218,6 +218,7 @@ class KngController extends BaseController {
 
 //        获取评论
         public function get_comment () {
+            $my_id = $_SESSION ['usr_id'];
             $page = $_GET ['page'];
             $kid = $_GET ['kid'];
             if(!$page){
@@ -230,11 +231,11 @@ class KngController extends BaseController {
             $data = $com
                 -> table ('ezsys_comment com,ezsys_usr usr')
                 -> where ("com.comment_kng_id = $kid and com.comment_usr_id = usr.usr_id")
-                -> field ('usr.usr_account author,com.comment_update_date dt,com.comment_describe descr')
+                -> field ('usr.usr_id uid,usr.usr_account author,com.comment_id cid,com.comment_update_date dt,com.comment_describe descr')
                 -> order ('comment_update_date desc')
                 -> limit (($page-1)*10, 10)
                 -> select ();
-            $arr = array('code' => 0,'msg'=>'','count' => $counts,'data' => $data);
+            $arr = array('code' => 0,'msg'=>'','count' => $counts,'data' => $data,'my_id' => $my_id);
             print_r(json_encode($arr));
         }
         /*
@@ -253,6 +254,17 @@ class KngController extends BaseController {
                 $arr = array('code' => 0,'msg'=>'发布成功');
             else
                 $arr = array('code' => 1,'msg'=>'发布失败');
+            print_r(json_encode($arr));
+        }
+//        删除评论
+        public function del_comment () {
+            $cid = $_POST ['cid'];
+            $com = M ('Comment');
+            $result = $com -> where ("comment_id=$cid") -> delete ();
+            if ($result > 0)
+                $arr = array('code' => 0,'msg'=>'删除成功');
+            else
+                $arr = array('code' => 1,'msg'=>'删除失败');
             print_r(json_encode($arr));
         }
 }
