@@ -215,4 +215,44 @@ class KngController extends BaseController {
                 $arr = array('code' => 1,'msg'=>'发布失败');
             print_r(json_encode($arr));
         }
+
+//        获取评论
+        public function get_comment () {
+            $page = $_GET ['page'];
+            $kid = $_GET ['kid'];
+            if(!$page){
+                $page = 1;
+            }
+            $com = M ('Comment');
+            $counts = $com
+                -> table ('ezsys_comment com')
+                -> where ("com.comment_kng_id = $kid") -> count ();
+            $data = $com
+                -> table ('ezsys_comment com,ezsys_usr usr')
+                -> where ("com.comment_kng_id = $kid and com.comment_usr_id = usr.usr_id")
+                -> field ('usr.usr_account author,com.comment_update_date dt,com.comment_describe descr')
+                -> order ('comment_update_date desc')
+                -> limit (($page-1)*10, 10)
+                -> select ();
+            $arr = array('code' => 0,'msg'=>'','count' => $counts,'data' => $data);
+            print_r(json_encode($arr));
+        }
+        /*
+        * Author : JasonLin
+        * Describe : 发布评论
+        */
+        public function new_comment () {
+            $id = $_SESSION ['usr_id'];
+            $data ['comment_kng_id'] = $_POST ['kid'];
+            $data ['comment_describe'] = $_POST ['descr'];
+            $data ['comment_usr_id'] = $id;
+            $data ['comment_update_date'] = date("Y-m-d H:i:s");
+            $com = M ('Comment');
+            $new_id = $com -> add ($data);//存入数据库
+            if ($new_id > 0)
+                $arr = array('code' => 0,'msg'=>'发布成功');
+            else
+                $arr = array('code' => 1,'msg'=>'发布失败');
+            print_r(json_encode($arr));
+        }
 }

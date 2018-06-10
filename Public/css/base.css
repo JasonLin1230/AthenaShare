@@ -7,7 +7,7 @@
     font-style: italic;
     word-spacing: 2px;
 }
-.kng_last li{
+.kng_last li,.comment li{
     padding-bottom: 20px;
 }
 .kng_last .li_detail{
@@ -24,8 +24,8 @@
     padding: 10px 0;
     font-size: 18px;
 }
-.kng_last p{
-    color: #666;
+.kng_last p,.comment p{
+    color: #555;
     line-height: 22px;
 }
 .kng_last p span{
@@ -47,7 +47,7 @@
 }
 .kng_content{
     margin-top: 10px;
-    min-height: 260px;
+    min-height: 230px;
 }
 
 
@@ -105,4 +105,8 @@
 }
 .layui-form-item a{
     color: #029789;
+}
+
+.comment p{
+    margin-bottom: 8px;
 }

@@ -14,7 +14,7 @@
     <!-- 头部区域-->
     <ul class="layui-nav layui-layout-left">
         <li class="layui-nav-item">
-            <a href="../Main/index.html">首页</a>
+            <a href="../Main/main.html">首页</a>
         </li>
         <li class="layui-nav-item <?php if($nav_select == 1): ?>layui-this<?php endif; ?>">
             <a href="../Kng/kng.html">知识分享</a>
@@ -103,6 +103,21 @@
                 <?php echo ($content); ?>
             </div>
         </div>
+        <div class="comment">
+            <h2 style="padding: 30px 0 20px;">评论区</h2>
+            <ul></ul>
+            <div id="comment-page" style="text-align: center;"></div>
+            <form action="#" class="layui-form">
+                <input type="text" name="kid" value="<?php echo ($kid); ?>" class="layui-hide">
+                <div class="layui-form-item layui-form-text">
+                    <textarea name="descr" placeholder="我要发表评论..." class="layui-textarea" lay-verify="required"></textarea>
+                </div>
+                <div class="layui-form-item" style="text-align: right;">
+                    <button class="layui-btn" lay-submit lay-filter="comment">立即评论</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="layui-footer">
     <!-- 底部固定区域 -->
@@ -114,7 +129,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">旧密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="old_pass" placeholder="请输入旧密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
+                    <input type="text" name="old_pass" placeholder="请输入旧密码" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">

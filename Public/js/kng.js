@@ -1,9 +1,10 @@
-layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () {
+layui.use(['element', 'form', 'table', 'layer','upload', 'laypage','jquery'], function () {
     var element = layui.element
         , form = layui.form
         , table = layui.table
         , layer = layui.layer
         , upload = layui.upload
+        , laypage = layui.laypage
         , $ = layui.$;
     element.on('tab(kng-tab)', function(data){
         switch(data.index)
@@ -215,5 +216,126 @@ layui.use(['element', 'form', 'table', 'layer','upload', 'jquery'], function () 
                 }
             });
         }
+    });
+    // 获取评论
+    var kid = window.location.href.split('=')[1];
+    function get_comment(){
+        $.ajax({
+            url: 'get_comment',
+            type: "get",
+            data: {
+                'kid' : kid
+            },
+            success: function (data) {
+                data = JSON.parse(data);
+                if(data.code === 0){
+                    var count=data.count;
+                    data=data.data;
+                    console.log(data);
+                    var html = '';
+                    for (var i = 0; i < data.length; i++) {
+                        html += "<li><p>"
+                            +data[i].descr
+                            + "</p><p class='layui-clear'><span class='layui-badge layui-bg-green'>"
+                            +data[i].author
+                            +"</span><span style='float: right;'>"
+                            +data[i].dt
+                            +"</span></p></li><hr>";
+                    }
+                    $('.comment ul').html(html);
+                    // 配置分页
+                    laypage.render({
+                        elem: 'comment-page'
+                        ,limit: 10
+                        ,count: count
+                        ,jump: function(obj, first){
+                            if(!first){
+                                $.ajax({
+                                    url: 'get_comment',
+                                    type: "get",
+                                    data: {
+                                        'kid' : kid,
+                                        'page' : obj.curr
+                                    },
+                                    success: function (data) {
+                                        data = JSON.parse(data);
+                                        if(data.code === 0){
+                                            data=data.data;
+                                            var html = '';
+                                            for (var i = 0; i < data.length; i++) {
+                                                html += "<li><p>"
+                                                    +data[i].descr
+                                                    + "</p><p class='layui-clear'><span class='layui-badge layui-bg-green'>"
+                                                    +data[i].author
+                                                    +"</span><span style='float: right;'>"
+                                                    +data[i].dt
+                                                    +"</span></p></li><hr>";
+                                            }
+                                            $('.comment ul').html(html);
+                                        }else{
+                                            if(data.msg!=""){
+                                                layer.msg(data.msg, {
+                                                    icon: 2
+                                                    , shade: 0.1
+                                                    , time: 2000
+                                                });
+                                            }else{
+                                                layer.msg('未知错误', {
+                                                    icon: 2
+                                                    , shade: 0.1
+                                                    , time: 2000
+                                                });
+                                            }
+                                        }
+                                    },
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                        layer.msg(XMLHttpRequest.status + '信息获取失败', {
+                                            icon: 2
+                                            , shade: 0.1
+                                            , time: 2000
+                                        })
+                                    },
+                                    complete: function (XMLHttpRequest, textStatus) {
+                                        this;
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }else{
+                    if(data.msg!=""){
+                        layer.msg(data.msg, {
+                            icon: 2
+                            , shade: 0.1
+                            , time: 2000
+                        });
+                    }else{
+                        layer.msg('未知错误', {
+                            icon: 2
+                            , shade: 0.1
+                            , time: 2000
+                        });
+                    }
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.msg(XMLHttpRequest.status + '信息获取失败', {
+                    icon: 2
+                    , shade: 0.1
+                    , time: 2000
+                })
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this;
+            }
+        });
+    }
+    get_comment();
+    // 发表评论
+    form.on('submit(comment)', function (data) {//insert
+        return beauty_ajax("new_comment", data.field, function () {
+            get_comment();
+            $("form textarea").val("");
+        });
     });
 })
