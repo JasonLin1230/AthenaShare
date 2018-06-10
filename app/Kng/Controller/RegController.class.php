@@ -3,11 +3,11 @@ namespace Kng\Controller;
 use Think\Controller;
 
 class RegController extends Controller {
-	public function index(){
+	public function reg(){
 		$this -> display ();
   }
 
-  public function reg(){
+  public function reg_usr(){
       $username=$_POST['username'];
       $data ['usr_passcode']=md5($_POST['password']);
       $data ['usr_email'] = $_POST ['email'];

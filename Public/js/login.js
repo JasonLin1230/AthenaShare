@@ -12,11 +12,11 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
             success: function (data) {
                 data = JSON.parse(data);
                 if (data.code === 0) {
-                    window.location='../Main/index.html';
+                    window.location='../Main/main.html';
                 } else {
                     if(data.msg!=""){
                         layer.msg(data.msg, {
-                            icon: 1
+                            icon: 2
                             , shade: 0.1
                             , time: 2000
                         });
@@ -60,7 +60,7 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
             return false;
         }else{
             $.ajax({
-                url: "reg",
+                url: "reg_usr",
                 type: "post",
                 data: data.field,
                 success: function (data) {
@@ -71,7 +71,7 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
                             , shade: 0.1
                             , time: 2000
                         },function () {
-                            window.location='../Login/index.html';
+                            window.location='../Login/login.html';
                         });
                     } else {
                         if(data.msg!=""){

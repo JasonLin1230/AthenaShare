@@ -20,7 +20,7 @@ class BaseController extends Controller
     //初始化方法
     public function _initialize(){
         if(!$_SESSION ['usr_id']){
-            $this->redirect('Login/index');
+            $this->redirect('Login/login');
         }
     }
     //修改密码

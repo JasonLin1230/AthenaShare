@@ -1,15 +1,15 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>AthenaShare</title>
-    <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
-    <link rel="stylesheet" href="/AthenaShare/src/Public/css/base.css">
-</head>
-<body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>AthenaShare</title>
+		<link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
+		<link rel="stylesheet" href="/AthenaShare/src/Public/css/base.css">
+	</head>
+	<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
     <div class="layui-logo">AthenaShare</div>
     <!-- 头部区域-->
     <ul class="layui-nav layui-layout-left">
@@ -81,68 +81,16 @@
         </ul>
     </div>
 </div>
-    <div class="layui-body content-main" style="padding: 15px;">
-        <!-- 内容主体区域 -->
-        <div class="layui-tab layui-tab-card" lay-filter="msg-tab">
-            <ul class="layui-tab-title">
-                <li class="<?php if(($msg_tab == -1) OR ($msg_tab == 0)): ?>layui-this<?php endif; ?>">已发消息</li>
-                <li class="<?php if($msg_tab == 1): ?>layui-this<?php endif; ?>">已读消息</li>
-                <li class="<?php if($msg_tab == 2): ?>layui-this<?php endif; ?>">未读消息</li>
-                <li class="<?php if($msg_tab == 3): ?>layui-this<?php endif; ?>">新建消息</li>
-            </ul>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item <?php if(($msg_tab == -1) OR ($msg_tab == 0)): ?>layui-show<?php endif; ?>">
-                    <div class="table-wrap">
-                        <table id="sent_msg" lay-filter="sent_msg"></table>
-                        <script type="text/html" id="operation-bar-msg">
-                            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-                        </script>
-                    </div>
-                </div>
-                <div class="layui-tab-item <?php if($msg_tab == 1): ?>layui-show<?php endif; ?>">
-                    <div class="table-wrap">
-                        <table id="read_msg" lay-filter="read_msg"></table>
-                    </div>
-                </div>
-                <div class="layui-tab-item <?php if($msg_tab == 2): ?>layui-show<?php endif; ?>">
-                    <div class="table-wrap">
-                        <table id="unread_msg" lay-filter="unread_msg"></table>
-                        <script type="text/html" id="operation-bar-unmsg">
-                            <a class="layui-btn layui-btn-xs" lay-event="read">设为已读</a>
-                            <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delete">删除</a>
-                        </script>
-                    </div>
-                </div>
-                <div class="layui-tab-item <?php if($msg_tab == 3): ?>layui-show<?php endif; ?>">
-                    <form class="layui-form " action="">
-                        <div class="layui-row">
-                            <div class="layui-col-sm6">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">接收者</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="reciver" placeholder="收信人用户名" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item layui-form-text">
-                            <label class="layui-form-label">消息内容</label>
-                            <div class="layui-input-block">
-                                <textarea name="describe" placeholder="请输入内容" class="layui-textarea"></textarea>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="msg-btn">发送</button>
-                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+		<div class="layui-body content-main" style="padding: 15px;background-color: #FAFAFA;">
+			<!-- 内容主体区域 -->
+            <div class="slogan">
+                <h1>Sharing your knowledge and resources.</h1>
+                <h1>Communicating with your friends.</h1><hr>
             </div>
-        </div>
-    </div>
-    <div class="layui-footer">
+			<ul class="kng_last"></ul>
+			<div id="page" style="text-align: center;"></div>
+		</div>
+		<div class="layui-footer">
     <!-- 底部固定区域 -->
     Copyright © 2018.AthenaShare
 </div>
@@ -175,10 +123,9 @@
         </form>
     </div>
 </script>
-</div>
-<script src="/AthenaShare/src/Public/layui/layui.js"></script>
-<script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
-<script src="/AthenaShare/src/Public/js/base.js"></script>
-<script src="/AthenaShare/src/Public/js/msg.js"></script>
-</body>
+	</div>
+	<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+	<script src="/AthenaShare/src/Public/js/base.js"></script>
+	<script src="/AthenaShare/src/Public/js/index.js"></script>
+	</body>
 </html>

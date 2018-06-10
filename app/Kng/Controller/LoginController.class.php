@@ -2,7 +2,7 @@
 namespace Kng\Controller;
 use Think\Controller;
 class LoginController extends Controller {
-    public function index(){
+    public function login(){
         $this->display();
     }
 
@@ -26,7 +26,7 @@ class LoginController extends Controller {
     }
     public  function logout(){
         session(null);
-		$this -> redirect ('Login/index'); // JasonLin 2018/6/3
+		$this -> redirect ('Login/login'); // JasonLin 2018/6/3
     }
     public function send_email() {
         $account = $_POST['usr_account'];

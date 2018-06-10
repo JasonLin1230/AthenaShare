@@ -14,7 +14,7 @@ class MainController extends BaseController {
 		 * Author : JasonLin
 		 * Describe : 母版页变量初始化
 		*/
-		public  function index(){
+		public  function main(){
             $this -> usr_name = session('usr_name');
             $this -> new_msg_num = new_message_count ();
             $this -> kng_tab = -1;

@@ -14,7 +14,7 @@
     <!-- 头部区域-->
     <ul class="layui-nav layui-layout-left">
         <li class="layui-nav-item">
-            <a href="../Main/index.html">首页</a>
+            <a href="../Main/main.html">首页</a>
         </li>
         <li class="layui-nav-item <?php if($nav_select == 1): ?>layui-this<?php endif; ?>">
             <a href="../Kng/kng.html">知识分享</a>
@@ -158,10 +158,10 @@
         </form>
     </div>
 </script>
-    <script src="/AthenaShare/src/Public/layui/layui.js"></script>
-    <script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
-    <script src="/AthenaShare/src/Public/js/base.js"></script>
-    <script src="/AthenaShare/src/Public/js/info.js"></script>
 </div>
+<script src="/AthenaShare/src/Public/layui/layui.js"></script>
+<script src="/AthenaShare/src/Public/ckeditor/ckeditor.js"></script>
+<script src="/AthenaShare/src/Public/js/base.js"></script>
+<script src="/AthenaShare/src/Public/js/info.js"></script>
 </body>
 </html>
