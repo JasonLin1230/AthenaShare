@@ -11,7 +11,6 @@ layui.use(['element',  'layer', 'jquery','laypage'], function () {
             if(data.code === 0){
                 var count=data.count;
                 data=data.data;
-                console.log(data);
                 var html = '';
                 for (var i = 0; i < data.length; i++) {
                     html += "<li><h3><a href='../Kng/kng_detail.html?kid="+data[i].kid+"'>"+data[i].name+"</a></h3><div class='li_detail'>"

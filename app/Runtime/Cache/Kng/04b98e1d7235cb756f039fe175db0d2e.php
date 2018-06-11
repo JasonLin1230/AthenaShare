@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>AthenaShare</title>
+    <link rel="icon" type="image/x-icon" href="/AthenaShare/src/Public/images/favicon.ico">
     <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
     <style>
         body{

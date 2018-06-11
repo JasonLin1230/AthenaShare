@@ -106,7 +106,23 @@
 .layui-form-item a{
     color: #029789;
 }
-
+/*增加评论功能*/
 .comment p{
     margin-bottom: 8px;
+}
+.comment_note{
+    height: 30px;
+    line-height: 30px!important;
+}
+.comment_note span:first-child{
+    font-size: 15px;
+    color: #337ab7;
+    font-weight: 700;
+}
+.comment_note a{
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
 }

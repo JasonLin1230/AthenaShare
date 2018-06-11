@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>AthenaShare</title>
+    <link rel="icon" type="image/x-icon" href="/AthenaShare/src/Public/images/favicon.ico">
     <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
     <link rel="stylesheet" href="/AthenaShare/src/Public/css/base.css">
 </head>
@@ -185,7 +186,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">旧密码</label>
                 <div class="layui-input-block">
-                    <input type="text" name="old_pass" placeholder="请输入旧密码" lay-verify="required|pass" autocomplete="off" class="layui-input">
+                    <input type="text" name="old_pass" placeholder="请输入旧密码" lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
