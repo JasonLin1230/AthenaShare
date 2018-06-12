@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>AthenaShare</title>
+    <link rel="icon" type="image/x-icon" href="/AthenaShare/src/Public/images/favicon.ico">
     <link rel="stylesheet" href="/AthenaShare/src/Public/layui/css/layui.css">
     <link rel="stylesheet" href="/AthenaShare/src/Public/css/base.css">
 </head>

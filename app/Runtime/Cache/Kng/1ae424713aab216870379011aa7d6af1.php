@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<title>管理员登录</title>
+    <link rel="icon" type="image/x-icon" href="/AthenaShare/src/Public/images/favicon.ico">
 	<link rel="stylesheet" href="/AthenaShare/src/Public/css/admin.css">
 </head>
 <body id="login">

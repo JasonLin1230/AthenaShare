@@ -40,20 +40,21 @@ class LoginController extends Controller {
                 $arr = array('code' => 1,'msg'=>'您没有预留邮箱！');
             }else if($data['usr_email'] != $email){
                 $arr = array('code' => 1,'msg'=>'您输入的邮箱不是该账户的预留邮箱！');
-            }
-        }
-        $name = $data['usr_real_name'];
-        $time = date('Y-m-d H:i:s');
-        $subject = "AthenaShare密码找回";
-        $captcha = GetRandNum(6);
-        $body = "<p>尊敬的{$name}，您好。<br/>    您于{$time}使用找回密码功能，我们将您的密码重置为<i>{$captcha}</i>，请您及时登录AthenaShare进行修改密码操作。</p>";
+            }else{
+                $name = $data['usr_real_name'];
+                $time = date('Y-m-d H:i:s');
+                $subject = "AthenaShare密码找回";
+                $captcha = GetRandNum(6);
+                $body = "<p>尊敬的{$name}，您好。<br/>    您于{$time}使用找回密码功能，我们将您的密码重置为<i>{$captcha}</i>，请您及时登录AthenaShare进行修改密码操作。</p>";
 
-        if(ezsys_send_mail($email,$name,$subject,$body,null)){
-            $new_data['usr_passcode']=md5($captcha);
-            $result = M('usr') -> where("usr_account='$account'") -> save($new_data);
-            $arr = array('code' => 0,'msg'=>'邮件发送成功！');
-        }else{
-            $arr = array('code' => 1,'msg'=>'邮件发送失败！');
+                if(ezsys_send_mail($email,$name,$subject,$body,null)){
+                    $new_data['usr_passcode']=md5($captcha);
+                    M('usr') -> where("usr_account='$account'") -> save($new_data);
+                    $arr = array('code' => 0,'msg'=>'邮件发送成功！');
+                }else{
+                    $arr = array('code' => 1,'msg'=>'邮件发送失败！');
+                }
+            }
         }
         print_r(json_encode($arr));
     }

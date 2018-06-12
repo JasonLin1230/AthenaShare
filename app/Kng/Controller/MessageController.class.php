@@ -130,9 +130,7 @@ class MessageController extends BaseController{
 		}else{
 		    $msg = M('msg');
             $new_data['msg_sender_id'] = $usr_id;
-            $new_data['msg_sender_cate'] = 2;
             $new_data['msg_rcver_id'] = $rcver_usr['usr_id'];
-            $new_data['msg_rcver_cate'] = 2;
             $new_data['msg_describe'] = $describe;
             $result = $msg -> add($new_data);
             if ($result > 0)

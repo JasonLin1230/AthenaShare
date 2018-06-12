@@ -47,7 +47,7 @@ layui.use(['element',  'layer', 'form', 'jquery','laypage', 'table'], function (
         , page: true //开启分页
         , cols: [[ //表头
             { field: 'name', title: '标题'}
-            , { field: 'cate', title: '类别'}
+            , { field: 'cate', title: '类别', sort: true}
             , { field: 'owner', title: '作者'}
             , { field: 'file_name', title: '文件'}
             , { field: 'date', title: '发布时间'}

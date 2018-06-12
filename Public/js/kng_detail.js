@@ -1,6 +1,7 @@
-layui.use(['jquery', 'form', 'layer',],function () {
+layui.use(['jquery', 'form', 'layer','laypage'],function () {
     var form = layui.form
         , layer = layui.layer
+        , laypage = layui.laypage
         , $ = layui.$;
     // 获取评论
     var kid = window.location.href.split('=')[1];
