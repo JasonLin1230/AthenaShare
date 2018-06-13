@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>管理员登录</title>
+    <link rel="icon" type="image/x-icon" href="__PUBLIC__/images/favicon.ico">
+	<link rel="stylesheet" href="__PUBLIC__/css/admin.css">
+</head>
+<body id="login">
+	<div id="login-wrapper">
+		<div id="login-top">
+			<h1>AthenaShare</h1>
+		</div>
+		<div id="login-content">
+			<form action="__ROOT__/index.php/AdminLogin/checklog" method="post" id="form">
+				<p>
+					<label>帐号</label>
+					<input class="text-input" name="usr" id="usr" type="text" required />
+				</p>
+				<p>
+					<label>密码</label>
+					<input class="text-input" name="pwd" id="pwd" type="password" required />
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+    document.onkeydown=function(event) {
+        var e = event || window.event;
+        if (e.keyCode == 13) { // Enter press
+            document.getElementById('form').submit();
+        }
+    }
+</script>
+</html>

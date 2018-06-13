@@ -26,6 +26,9 @@
                 <li class="layui-nav-item layui-this">
                     <a href="admin_msg.html" class="layui-icon layui-icon-notice">&nbsp;&nbsp;消息管理</a>
                 </li>
+                <li class="layui-nav-item">
+                    <a href="../AdminLogin/logout">注销</a>
+                </li>
             </ul>
         </div>
     </div>

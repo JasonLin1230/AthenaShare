@@ -6,46 +6,11 @@
  * Date : 2016/5/31
  */
 namespace Kng\Controller;
-use Think\Controller;
-class AdminController extends Controller {
-    //管理员登录
-    public function login(){
-        $this->display();
-    }
-
-    //管理员登录检查
-    public function checklog(){
-       $usr= I('post.usr');
-       $pwd= md5(I('post.pwd'));
-       $result = M('admin')->where("admin_account='%s' AND admin_passcode='%s'",$usr,$pwd)->find();
-       if($result){
-            $_SESSION['admin_id'] = $result['admin_id'];
-			$this -> redirect ('Admin/index');
-       }else{
-            $this->error('登陆失败');
-       }
-    }
-
-    //检查管理员是否登录
-    private function admin_check_login () {
-        $admin_id = $_SESSION ['admin_id'];
-        if (isset ($admin_id)) {
-            return $admin_id;
-        } else {
-            return -1;
-        }
-    }
-
-    //管理员退出
-    public function logout(){
-        session(null);
-		$this -> redirect ('Admin/login'); // JasonLin 2018/5/213
-    }
+use Kng\Controller\AdminBaseController;
+class AdminController extends AdminBaseController {
 
     //管理员个人中心页
     public function index(){
-    if (($admin_id = $this -> admin_check_login ()) < 0)
-        $this -> redirect ('Admin/login');
       $this -> assign('adm_count', M('admin') -> count());
       $this -> assign('usr_count', M('usr') -> count());
       $this -> assign('kng_count', M('kng') -> count());
@@ -55,8 +20,6 @@ class AdminController extends Controller {
 
     //新增管理员
     public function add_admin(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $new_data['admin_account'] = I('post.admin_account');
         $new_data['admin_passcode'] = md5(I('post.admin_pass'));
         $result = M("admin") -> add($new_data);
@@ -70,8 +33,6 @@ class AdminController extends Controller {
 
     //用户管理
     public function usr(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $usr_count = M('usr')->count();  //用户总数
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
@@ -87,8 +48,6 @@ class AdminController extends Controller {
 
     //用户删除
     public function del_usr(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $uid = $_POST ['uid'];
         $result = M("usr") -> where ("usr_id = $uid") -> delete ();
         if ($result > 0)
@@ -100,8 +59,6 @@ class AdminController extends Controller {
 
     //知识管理
     public function kng(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $kng_count = M('kng')->count();
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
@@ -118,8 +75,6 @@ class AdminController extends Controller {
 
     //知识删除
     public function del_kng(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $kid = $_POST ['id'];
         $result = M("kng") -> where ("kng_id = $kid") -> find();
         $file_path= $result['kng_file_path'];
@@ -159,9 +114,6 @@ class AdminController extends Controller {
 
     //新增分类
     public function add_cate(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
-
         $catename = $_POST ['catename'];
         $find = M("cate") ->where("cate_name = '$catename'") ->find();
         if($find){
@@ -180,8 +132,6 @@ class AdminController extends Controller {
 
     //消息管理
     public function msg(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $page = $_GET ['page'];
         $limit = $_GET ['limit'];
         $msg_count = M('msg')->count();
@@ -210,8 +160,6 @@ class AdminController extends Controller {
 
     //消息删除
     public function del_msg(){
-        if (($admin_id = $this -> admin_check_login ()) < 0)
-            $this -> redirect ('Admin/login');
         $mid = $_POST ['mid'];
         $result = M("msg") -> where ("msg_id = $mid") -> delete ();
         if ($result > 0)
