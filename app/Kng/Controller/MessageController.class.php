@@ -33,10 +33,10 @@ class MessageController extends BaseController{
 		$msg = M ('msg');
         $count = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id") -> count ();
+            ->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id and msg.msg_sender_del = 0") -> count ();
         $data = $msg
 			->table('ezsys_usr usr,ezsys_msg msg') 
-			->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id")
+			->where("msg.msg_sender_id = $id and usr.usr_id = msg.msg_rcver_id and msg.msg_sender_del = 0")
 			->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
 			->order ('msg_update_date desc')
             ->limit (($page-1)*$limit,$limit)
@@ -57,10 +57,10 @@ class MessageController extends BaseController{
         $msg = M ('msg');
         $count = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1") -> count ();
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1 and msg.msg_rcver_del = 0") -> count ();
         $data = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1")
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 1 and msg.msg_rcver_del = 0")
             ->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
             ->order ('msg_update_date desc')
             ->limit (($page-1)*$limit,$limit)
@@ -82,10 +82,10 @@ class MessageController extends BaseController{
         $msg = M ('msg');
         $count = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0") -> count ();
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0 and msg.msg_rcver_del = 0") -> count ();
         $data = $msg
             ->table('ezsys_usr usr,ezsys_msg msg')
-            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0")
+            ->where("msg.msg_rcver_id = $id and usr.usr_id = msg.msg_sender_id and msg_read = 0 and msg.msg_rcver_del = 0")
             ->field('usr.usr_account account,msg.msg_id msg_id,msg.msg_describe dscrib,msg.msg_update_date date')
             ->order ('msg_update_date desc')
             ->limit (($page-1)*$limit,$limit)
@@ -143,17 +143,29 @@ class MessageController extends BaseController{
 
 	/*
 	 * Author : JasonLin
-	 * Describe : 根据传入的kid删除知识项实体
+	 * Describe : 根据传入的kid删除
 	 */
 	public function delete_msg () {
 		$usr_id = $_SESSION ['usr_id'];
         $msg_id = $_POST ['msg_id'];
-		$result = M('msg') -> where ("msg_id=$msg_id") -> delete ();
-        if ($result > 0)
-            $arr = array('code' => 0,'msg'=>'删除成功');
-        else
-            $arr = array('code' => 1,'msg'=>'删除失败');
+		$result = M('msg') -> where ("msg_id=$msg_id") -> select ();
+		if($result[0]['msg_rcver_id'] == $usr_id){
+            $data = M('msg') -> where ("msg_id=$msg_id") -> setField('msg_rcver_del',1);
+            if($data>0){
+                $arr = array('code' => 0,'msg'=>'删除成功');
+            }else{
+                $arr = array('code' => 1,'msg'=>'删除失败');
+            }
+        }else if($result[0]['msg_sender_id'] == $usr_id){
+            $data = M('msg') -> where ("msg_id=$msg_id") -> setField('msg_sender_del',1);
+            if($data>0){
+                $arr = array('code' => 0,'msg'=>'删除成功');
+            }else{
+                $arr = array('code' => 1,'msg'=>'删除失败');
+            }
+        }else{
+            $arr = array('code' => 1,'msg'=>'消息不存在，删除失败');
+        }
         print_r(json_encode($arr));
 	}
-      
 }
