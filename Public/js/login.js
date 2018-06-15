@@ -109,6 +109,21 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
     var countdown=60;
     function settime(obj) {//设置按钮提示
         obj.unbind();
+        // 邮箱正则
+        var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+        var email_val=$("#user-login-email").val();
+        if(!reg.test(email_val)){
+            layer.msg('邮箱格式不正确', {
+                icon: 2
+                , shade: 0.1
+                , time: 1000
+            });
+            $("#LAY-user-getsmscode").on('click',function () {
+                settime($(this));
+                send_valid_email();
+            })
+            return false;
+        }
         if (countdown == 0) {
             obj.removeClass("layui-disabled");
             obj.text("获取验证码");
@@ -128,17 +143,7 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
         },1000)
     }
     function send_valid_email(){
-        // 邮箱正则
-        var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
         var email_val=$("#user-login-email").val();
-        if(!reg.test(email_val)){
-            layer.msg('邮箱格式不正确', {
-                icon: 2
-                , shade: 0.1
-                , time: 1000
-            });
-            return false;
-        }
         $.ajax({
             url: "reg_usr",
             type: "post",
@@ -184,7 +189,7 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
         });
     }
     $("#LAY-user-getsmscode").on('click',function () {
-        settime($(this));
+        return settime($(this));
         send_valid_email();
     });
 });

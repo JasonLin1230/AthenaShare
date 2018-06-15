@@ -14,7 +14,7 @@ class RegController extends Controller {
         $time = date('Y-m-d H:i:s');
         $subject = "AthenaShare邮箱验证";
         $captcha = GetRandNum(6);
-        $body = "<p>【AthenaShare】欢迎注册AthenaShare系统，您的邮箱验证码是<i>{$captcha}</i>，5分钟内有效。如非本人操作，请您忽略本短信。</p>";
+        $body = "<p>【AthenaShare】欢迎注册AthenaShare系统，您的邮箱验证码是<i>{$captcha}</i>，5分钟内有效。如非本人操作，请您忽略本邮件。</p>";
         if(ezsys_send_mail($email,$name,$subject,$body,null)){
             $new_data['usr_passcode']=md5($captcha);
             $arr = array('code' => 0,'msg'=>'邮件发送成功！');
