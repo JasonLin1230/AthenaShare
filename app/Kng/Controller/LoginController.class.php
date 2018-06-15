@@ -20,6 +20,8 @@ class LoginController extends Controller {
        }else{
             $_SESSION['usr_id'] = $result['usr_id'];
             $_SESSION ['usr_name'] = $result ['usr_real_name'];
+            session_set_cookie_params('1800');//设置session生存期30分钟
+            ini_set('session.gc_maxlifetime','1800');
             $arr = array('code' => 0,'msg'=>'登陆成功');
             print_r(json_encode($arr));
        }

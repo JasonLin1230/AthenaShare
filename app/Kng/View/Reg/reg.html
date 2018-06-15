@@ -32,7 +32,20 @@
                 <input type="text" name="email" id="user-login-email" lay-verify="required|email" placeholder="安全邮箱" class="layui-input">
             </div>
             <div class="layui-form-item">
-                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="user-reg-submit">注 册</button>
+                <div class="layui-row">
+                    <div class="layui-col-xs7">
+                        <label class="user-login-icon layui-icon layui-icon-vercode" for="user-login-valid"></label>
+                        <input type="password" name="valid_email" id="user-login-valid" lay-verify="required" placeholder="邮箱验证码" class="layui-input">
+                    </div>
+                    <div class="layui-col-xs5">
+                        <div style="margin-left: 10px;">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="LAY-user-getsmscode" style="height: 42px;">获取验证码</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-btn-fluid layui-btn-disabled" lay-submit lay-filter="user-reg-submit" id="LAY-user-submit">注 册</button>
             </div>
             <div class="layui-form-item">
                 <a href="../Login/login.html" style="float: right;">返回登录</a>
