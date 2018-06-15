@@ -3,10 +3,7 @@ namespace Kng\Controller;
 use Kng\Controller\BaseController;
 
 class UserController extends BaseController{
-	    /*
-		 * Author : JasonLin
-		 * Describe : 个人信息管理。
-		*/
+
 	    public function info(){
             $this -> usr_name = $_SESSION ['usr_name'];
             $this -> kng_tab = -1;
@@ -26,10 +23,6 @@ class UserController extends BaseController{
             $this -> ajaxReturn($datas);
 		}
 
-		/*
-		 * Author : JasonLin
-		 * Describe : 个人信息编辑。
-		*/
 		public function edit_info() {
 			$usr_id = $_SESSION ['usr_id'];
 			$new_name = $_POST['name'];
@@ -52,10 +45,7 @@ class UserController extends BaseController{
             print_r(json_encode($arr));
 		}
 
-		/*
-		 * Author : JasonLin
-		 * Describe : 发送验证码到邮件。
-		 */
+
 		public function send_email() {
 			$account = $_POST['usr_account'];
 			$email = $_POST['usr_email'];

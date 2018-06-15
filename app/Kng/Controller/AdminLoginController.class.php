@@ -1,10 +1,5 @@
 <?php
 
-/*
- * Author : JasonLin
- * Describe : admin.
- * Date : 2016/5/31
- */
 namespace Kng\Controller;
 use think\Controller;
 class AdminLoginController extends Controller {

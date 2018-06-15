@@ -12,28 +12,13 @@
 
         /*
          * Author : JasonLin
-         * Describe : 获取所有分类名称
+         * Describe : 获取消息数量
          */
         function new_message_count () {
             $usr_id = $_SESSION ['usr_id'];
             $new_msg_count = M ('Msg') -> where ("msg_rcver_id=$usr_id and msg_read=0") -> 
                 count ();
             return  $new_msg_count;
-        }
-
-
-        /*
-         * Author : JasonLin
-         * Describe : 检查是否登录
-         */
-        function check_login () {
-            //session_start ();       //JasonLin 2016/5/6 系统默认开启，如果不希望系统自动启动session的话，可以设置'SESSION_AUTO_START' =>false
-            $usr_id = $_SESSION ['usr_id'];
-            if (isset ($usr_id)) {
-                return $usr_id;
-            } else {
-                return -1;
-            }
         }
 
 

@@ -121,7 +121,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">接收者</label>
                                     <div class="layui-input-block">
-                                        <input type="text" name="reciver" placeholder="收信人用户名" autocomplete="off" class="layui-input">
+                                        <input type="text" name="reciver" placeholder="收信人用户名"  lay-verify="required" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">消息内容</label>
                             <div class="layui-input-block">
-                                <textarea name="describe" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                <textarea name="describe" placeholder="请输入内容"  lay-verify="required" class="layui-textarea"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">

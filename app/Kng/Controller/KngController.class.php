@@ -3,7 +3,7 @@
 /*
  * Author : JasonLin
  * Describe : 知识项.
- * Date : 2018/6/1
+ * Date : 2018/6/2
  */
 namespace Kng\Controller;
 use Kng\Controller\BaseController;
@@ -50,10 +50,7 @@ class KngController extends BaseController {
             $this -> content = $data ['kng_describe'];
             $this->display();
         }
-		/*
-		 * Author : JasonLin
-		 * Describe : 个人主页 -> 知识管理 -> 我的发布
-		*/
+
 		public function personal_kng_mine () {
 		    $id = $_SESSION ['usr_id'];
 			$page = $_GET ['page'];
@@ -73,10 +70,6 @@ class KngController extends BaseController {
             print_r(json_encode($arr));
 		}
 
-		/*
-		 * Author : JasonLin
-		 * Describe : 个人主页 -> 知识管理 -> 我的草稿
-		*/
 		public function personal_kng_script () {
             $usr_id = $_SESSION ['usr_id'];
             $page = $_GET ['page'];
@@ -96,10 +89,6 @@ class KngController extends BaseController {
             print_r(json_encode($arr));
 		}
 
-		/*
-		 * Author : JasonLin
-		 * Describe : 添加知识项实体
-		 */
 		public function insert_kng () {
             $id = $_SESSION ['usr_id'];
 			$data ['kng_flag'] = $_POST ['is_script'];

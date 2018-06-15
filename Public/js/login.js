@@ -55,7 +55,10 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
         });
     });
     form.on('submit(user-reg-submit)', function (data) {
-        if (data.field.password != data.field.password2) {
+        if(data.field.password.length <6){
+            layer.msg('密码至少为6位！', {icon: 5});
+            return false;
+        }else if (data.field.password != data.field.password2) {
             layer.msg('两次密码输入不同！', {icon: 5});
             return false;
         }else{

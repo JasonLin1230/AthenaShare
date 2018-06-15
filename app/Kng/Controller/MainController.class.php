@@ -1,9 +1,4 @@
 <?php
-/*
- * Author : JasonLin
- * Date : 2018/6/1
- * Describe : Main Page Controller
- */
 
 namespace Kng\Controller;
 use Kng\Controller\BaseController;

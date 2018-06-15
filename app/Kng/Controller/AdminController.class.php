@@ -1,10 +1,4 @@
 <?php
-
-/*
- * Author : JasonLin
- * Describe : admin.
- * Date : 2016/5/31
- */
 namespace Kng\Controller;
 use Kng\Controller\AdminBaseController;
 class AdminController extends AdminBaseController {

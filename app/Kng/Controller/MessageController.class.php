@@ -1,9 +1,5 @@
 <?php
 
-	/*
-	 * Author : JasonLin  2018/6/01
-	 * Describe : 个人消息管理。
-	*/
 namespace Kng\Controller;
 use Kng\Controller\BaseController;
 
@@ -22,10 +18,7 @@ class MessageController extends BaseController{
         $this -> nav_select = 2;
         $this->display();
     }
-	/*
-	 * Author : JasonLin  2018/6/01
-	 * Describe : 显示发送消息列表
-	*/
+
 	public function person_msg_send (){
         $id = $_SESSION ['usr_id'];
         $page = $_GET ['page'];
@@ -46,10 +39,6 @@ class MessageController extends BaseController{
 	}
 
     //echo ($msg -> getLastSql()); //打印一下SQL语句，查看一下
-	/*
-	 * Author : JasonLin  2018/6/1
-	 * Describe : 显示已读消息列表
-	*/
 	public function person_msg_recive(){
         $id = $_SESSION ['usr_id'];
         $page = $_GET ['page'];
@@ -69,12 +58,6 @@ class MessageController extends BaseController{
         print_r(json_encode($arr));
 	}
 
-
-
-	/*
-	 * Author : JasonLin  2018/5/11
-	 * Describe : 显示未读消息列表
-	*/
 	public function person_msg_new(){
         $id = $_SESSION ['usr_id'];
         $page = $_GET ['page'];
@@ -111,12 +94,6 @@ class MessageController extends BaseController{
         print_r(json_encode($arr));
     }
 
-
-
-	/*
-	 * Author : JasonLin  2018/6/1
-	 * Describe : 消息发送
-	*/
 	public function msg_send_utou(){
 		$usr_id = $_SESSION ['usr_id'];
         $reciver = $_POST ['reciver'];
@@ -141,10 +118,6 @@ class MessageController extends BaseController{
         print_r(json_encode($arr));
 	}
 
-	/*
-	 * Author : JasonLin
-	 * Describe : 根据传入的kid删除
-	 */
 	public function delete_msg () {
 		$usr_id = $_SESSION ['usr_id'];
         $msg_id = $_POST ['msg_id'];
