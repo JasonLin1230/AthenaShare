@@ -107,8 +107,8 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
         }
     });
     var countdown=60;
-    function settime(obj) {//设置按钮提示
-        obj.unbind();
+    function send_valid_email(obj) {//验证邮箱、发送邮件
+    	var _obj=obj;
         // 邮箱正则
         var reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
         var email_val=$("#user-login-email").val();
@@ -118,32 +118,14 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
                 , shade: 0.1
                 , time: 1000
             });
-            $("#LAY-user-getsmscode").on('click',function () {
-                settime($(this));
-                send_valid_email();
-            })
             return false;
         }
-        if (countdown == 0) {
-            obj.removeClass("layui-disabled");
-            obj.text("获取验证码");
-            countdown = 60;
-            $("#LAY-user-getsmscode").on('click',function () {
-                settime($(this));
-                send_valid_email();
-            })
-            return;
-        } else {
-            obj.addClass("layui-disabled");
-            obj.text(countdown + "秒后重获");
-            countdown--;
-        }
-        setTimeout(function() {
-            settime(obj)
-        },1000)
-    }
-    function send_valid_email(){
-        var email_val=$("#user-login-email").val();
+        var submitting = layer.msg('正在发送', {
+	        icon: 16
+	        , shade: 0.1
+	        , time: 0
+	    });
+	    var email_val=$("#user-login-email").val();
         $.ajax({
             url: "reg_usr",
             type: "post",
@@ -158,6 +140,7 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
                         , shade: 0.1
                         , time: 2000
                     },function () {
+                    	setbutton(_obj);
                         $("#LAY-user-submit").removeClass('layui-btn-disabled');
                     });
                 } else {
@@ -188,8 +171,26 @@ layui.use(['element', 'form', 'layer', 'jquery'], function () {
             }
         });
     }
+    function setbutton(obj){//设置按钮提示
+    	var _obj=obj;
+        _obj.unbind();
+    	if (countdown == 0) {
+            obj.removeClass("layui-disabled");
+            obj.text("获取验证码");
+            countdown = 60;
+            $("#LAY-user-getsmscode").on('click',function () {
+                send_valid_email($(this));
+            })
+        } else {
+            obj.addClass("layui-disabled");
+            obj.text(countdown + "秒后重获");
+            countdown--;
+	        setTimeout(function() {
+	            setbutton(_obj);
+	        },1000)
+        }
+    }
     $("#LAY-user-getsmscode").on('click',function () {
-        return settime($(this));
-        send_valid_email();
+        send_valid_email($(this));
     });
 });
